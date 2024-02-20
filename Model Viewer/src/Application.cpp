@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "application.h"
 
 #include <iostream>
 
@@ -9,18 +9,18 @@ bool Application::Startup() {
 	return false;
   }
 
-  p_Window = glfwCreateWindow(k_WindowWidth, k_WindowHeight, "Model Viewer",
+  window = glfwCreateWindow(window_width, window_height, "Model Viewer",
 							 nullptr, nullptr);
 
-  if (p_Window == nullptr) {
+  if (window == nullptr) {
 	glfwTerminate();
 	return false;
   }
 
-  glfwMakeContextCurrent(p_Window);
+  glfwMakeContextCurrent(window);
 
   if (!gladLoadGL()) {
-	glfwDestroyWindow(p_Window);
+	glfwDestroyWindow(window);
 	glfwTerminate();
 	return false;
   }
@@ -32,14 +32,12 @@ bool Application::Startup() {
 
   Gizmos::create(10000, 10000, 0, 0);
 
-  //m_meshRender.InitialiseQuad();
-
   return true;
 }
 
 bool Application::Update() {
-  if (glfwWindowShouldClose(p_Window) == true ||
-	  glfwGetKey(p_Window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+  if (glfwWindowShouldClose(window) == true ||
+	  glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 	return false;
   }
   return true;
@@ -51,32 +49,32 @@ void Application::Draw() {
 
   Gizmos::addTransform(glm::mat4(1)); // 3-Colour XYZ Tool
 
-  CreateGrid(k_NumGridLines, k_White, k_Black); // 10x10 square grid (21 x 21 grid lines)
-  CreateViewPort(k_Projection, k_View);
+  CreateGrid(number_of_grid_lines, kWHITE, kBLACK); // 10x10 square grid (21 x 21 grid lines)
+  CreateViewPort(projection, view);
 
   //////////// Everything goes in here related to drawing ////////////
 
-  glfwSwapBuffers(p_Window);
+  glfwSwapBuffers(window);
   glfwPollEvents();
 }
 
 void Application::Shutdown() {
-  glfwDestroyWindow(p_Window);
+  glfwDestroyWindow(window);
   glfwTerminate();
 }
 
-void Application::CreateGrid(const int kNumGridLines,
-							 const glm::vec4 midLineColour,
-							 const glm::vec4 gridColour) {
+void Application::CreateGrid(const int number_of_grid_lines,
+							 const glm::vec4 middle_line_colour,
+							 const glm::vec4 grid_line_colour) {
 
-  int midPoint = (kNumGridLines - 1) / 2;
+  int mid_point = (number_of_grid_lines - 1) / 2;
 
-  for (int i = 0; i < kNumGridLines; i++) {
-	Gizmos::addLine(glm::vec3(-midPoint + i, 0, midPoint),
-					glm::vec3(-midPoint + i, 0, -midPoint),
-					i == midPoint ? midLineColour : gridColour);
-	Gizmos::addLine(glm::vec3(midPoint, 0, -midPoint + i),
+  for (int i = 0; i < number_of_grid_lines; i++) {
+	Gizmos::addLine(glm::vec3(-mid_point + i, 0, mid_point),
+					glm::vec3(-mid_point + i, 0, -mid_point),
+					i == mid_point ? middle_line_colour : grid_line_colour);
+	Gizmos::addLine(glm::vec3(mid_point, 0, -mid_point + i),
 					glm::vec3(-10, 0, -10 + i),
-					i == midPoint ? midLineColour : gridColour);
+					i == mid_point ? middle_line_colour : grid_line_colour);
   }
 }

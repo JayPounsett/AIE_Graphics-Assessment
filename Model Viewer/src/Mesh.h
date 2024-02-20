@@ -6,12 +6,12 @@
 
 class Mesh {
 public:
-  Mesh() : m_TriCount(0), m_vao(0), m_vbo(0), m_ibo(0){}
+  Mesh() : tri_count(0), vao(0), vbo(0), ibo(0){}
   virtual ~Mesh();
 
 protected:
-  unsigned int m_TriCount;
+  unsigned int tri_count;
 
   // Vertex Array Object, Vertex Buffer Object, Index Buffer Object
-  unsigned int m_vao, m_vbo, m_ibo;
+  unsigned int vao, vbo, ibo;
 };
