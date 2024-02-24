@@ -1,80 +1,111 @@
-#include "application.h"
+#include "Application.h"
 
+#include "Gizmos.h"
 #include <iostream>
 
-using namespace aie;
-
-bool Application::Startup() {
+bool Application::startup() {
   if (glfwInit() == false) {
-	return false;
+    return false;
   }
 
-  window = glfwCreateWindow(window_width, window_height, "Model Viewer",
-							 nullptr, nullptr);
+  m_window = glfwCreateWindow(m_windowWidth, m_windowHeight, "Model Viewer", nullptr,
+                            nullptr);
 
-  if (window == nullptr) {
-	glfwTerminate();
-	return false;
+  if (m_window == nullptr) {
+    glfwTerminate();
+    return false;
   }
 
-  glfwMakeContextCurrent(window);
+  glfwMakeContextCurrent(m_window);
 
   if (!gladLoadGL()) {
-	glfwDestroyWindow(window);
-	glfwTerminate();
-	return false;
+    glfwDestroyWindow(m_window);
+    glfwTerminate();
+    return false;
   }
 
   printf("GL: %i.%i\n", GLVersion.major, GLVersion.minor);
 
-  glClearColor(0.25f, 0.25f, 0.25f, 1); // Grey
+  glClearColor(0.25f, 0.25f, 0.25f, 1); // Grey Window
   glEnable(GL_DEPTH_TEST);
 
-  Gizmos::create(10000, 10000, 0, 0);
+  aie::Gizmos::create(10000, 10000, 0, 0);
+
+  /*m_shader.loadShader(aie::eShaderStage::VERTEX, "./shaders/vertex/simple.vert");
+  m_shader.loadShader(aie::eShaderStage::FRAGMENT,
+                    "./shaders/fragment/simple.frag");
+
+  if (m_shader.link() == false) {
+    printf("Shader Error %s\n", m_shader.getLastError());
+    return false;
+  }
+
+  m_quadMesh.initialiseQuad();*/
+
+  //// quad transform - make it 10 units wide x 10 units high
+  //m_quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
 
   return true;
 }
 
-bool Application::Update() {
-  if (glfwWindowShouldClose(window) == true ||
-	  glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
-	return false;
+bool Application::update() {
+  if (glfwWindowShouldClose(m_window) == true ||
+      glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    return false;
   }
   return true;
 }
 
-void Application::Draw() {
+void Application::draw() {
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  Gizmos::clear();
+  aie::Gizmos::clear();
 
-  Gizmos::addTransform(glm::mat4(1)); // 3-Colour XYZ Tool
+  aie::Gizmos::addTransform(glm::mat4(1)); // 3-Colour XYZ Tool
 
-  CreateGrid(number_of_grid_lines, kWHITE, kBLACK); // 10x10 square grid (21 x 21 grid lines)
-  CreateViewPort(projection, view);
+  createGrid(); // 10x10 square grid (21 x 21 grid lines)
+  createViewPort();
 
   //////////// Everything goes in here related to drawing ////////////
 
-  glfwSwapBuffers(window);
+  //// Bind shader
+  // shader.bind();
+
+  //// Bind Transform
+  // auto pvm = projection * view * quadTransform;
+  // shader.bindUniform("ProjectionViewModel", pvm);
+
+  //// Draw Quad
+  // quadMesh.draw();
+
+  glfwSwapBuffers(m_window);
   glfwPollEvents();
 }
 
-void Application::Shutdown() {
-  glfwDestroyWindow(window);
+void Application::shutdown() {
+  aie::Gizmos::destroy();
+  glfwDestroyWindow(m_window);
   glfwTerminate();
 }
 
-void Application::CreateGrid(const int number_of_grid_lines,
-							 const glm::vec4 middle_line_colour,
-							 const glm::vec4 grid_line_colour) {
-
-  int mid_point = (number_of_grid_lines - 1) / 2;
-
-  for (int i = 0; i < number_of_grid_lines; i++) {
-	Gizmos::addLine(glm::vec3(-mid_point + i, 0, mid_point),
-					glm::vec3(-mid_point + i, 0, -mid_point),
-					i == mid_point ? middle_line_colour : grid_line_colour);
-	Gizmos::addLine(glm::vec3(mid_point, 0, -mid_point + i),
-					glm::vec3(-10, 0, -10 + i),
-					i == mid_point ? middle_line_colour : grid_line_colour);
+/// <summary>
+/// Taking in the number of grid lines and two colours, using Gizmos it will
+/// draw out a grid with the minor colour colouring the middle crossed lines.
+/// </summary>
+/// <param name="numberGridLines"></param>
+/// <param name="middleLineColour"></param>
+/// <param name="gridLineColour"></param>
+void Application::createGrid() {
+  for (int i = 0; i < 21; i++) {
+    aie::Gizmos::addLine(glm::vec3(-10 + i, 0, 10), glm::vec3(-10 + i, 0, -10),
+                         i == 10 ? k_WHITE : k_BLACK);
+    aie::Gizmos::addLine(glm::vec3(10, 0, -10 + i), glm::vec3(-10, 0, -10 + i),
+                         i == 10 ? k_WHITE : k_BLACK);
   }
 }
+
+/// <summary>
+/// Taking in projection and view, use Gizmos to draw the viewport.
+/// </summary>
+/// <param name="projection"></param>
+/// <param name="view"></param>
+void Application::createViewPort() { aie::Gizmos::draw(m_projection * m_view); }

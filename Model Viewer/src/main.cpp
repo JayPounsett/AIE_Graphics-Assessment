@@ -1,17 +1,17 @@
-#include "application.h"
 #include <iostream>
 
-int main() {
+#include "Application.h"
 
-	Application *app = new Application();
+int main()
+{
+    Application* app = new Application();
 
-	if (app->Startup() == true) {
-        while (app->Update()) {
-            app->Draw();
-		}
-        app->Shutdown();
-	}
+    if (app->startup() == true) {
+        while (app->update()) {
+            app->draw();
+        }
+        app->shutdown();
+    }
     delete app;
-	return 0;
+    return 0;
 }
-

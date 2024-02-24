@@ -1,17 +1,26 @@
 #pragma once
-#include "glad.h"
+#include "glm/glm.hpp"
 
 // Mesh class that hold mesh data (ibo vao etc.) then a mesh renderer that
 // actually handles rendering of the mesh
 
 class Mesh {
+
 public:
-  Mesh() : tri_count(0), vao(0), vbo(0), ibo(0){}
+  struct Vertex {
+    glm::vec4 position;
+    glm::vec4 normal;
+  };
+
+  Mesh() : m_triCount(0), m_vao(0), m_vbo(0), m_ibo(0) {}
   virtual ~Mesh();
 
+  void initialiseQuad();
+  virtual void draw();
+
 protected:
-  unsigned int tri_count;
+  unsigned int m_triCount;
 
   // Vertex Array Object, Vertex Buffer Object, Index Buffer Object
-  unsigned int vao, vbo, ibo;
+  unsigned int m_vao, m_vbo, m_ibo;
 };
