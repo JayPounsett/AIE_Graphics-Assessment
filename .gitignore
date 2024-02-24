@@ -72,6 +72,7 @@ StyleCopReport.xml
 *_i.c
 *_p.c
 *_h.h
+*.exe
 *.ilk
 *.meta
 *.obj
@@ -384,6 +385,11 @@ FodyWeavers.xsd
 !.vscode/extensions.json
 *.code-workspace
 
+# JetBrains Rider
+.idea/
+*.sln.iml
+
+
 # Local History for Visual Studio Code
 .history/
 
@@ -394,7 +400,3 @@ FodyWeavers.xsd
 *.msm
 *.msp
 
-# JetBrains Rider
-.idea/
-*.sln.iml
-*.exe
