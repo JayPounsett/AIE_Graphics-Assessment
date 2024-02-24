@@ -38,8 +38,8 @@
     <ClInclude Include="include\Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\data\shaders\fragment\simple.frag" />
-    <None Include="bin\data\shaders\vertex\simple.vert" />
+    <None Include="data\Shaders\Fragment\simple.frag" />
+    <None Include="data\Shaders\Vertex\simple.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

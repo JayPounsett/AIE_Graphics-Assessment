@@ -13,13 +13,13 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Resource Files\shaders">
+    <Filter Include="Resource Files\Shaders">
       <UniqueIdentifier>{91f56342-b055-46a4-a530-aa86eafbcc1e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\shaders\fragment">
+    <Filter Include="Resource Files\Shaders\Fragment">
       <UniqueIdentifier>{800c9b74-867c-4922-941c-00c0b67aa257}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files\shaders\vertex">
+    <Filter Include="Resource Files\Shaders\Vertex">
       <UniqueIdentifier>{f8c1119c-b229-417e-b7a1-5966c94a1466}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -64,11 +64,11 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="bin\data\shaders\fragment\simple.frag">
-      <Filter>Resource Files\shaders\fragment</Filter>
+    <None Include="data\Shaders\Fragment\simple.frag">
+      <Filter>Resource Files\Shaders\Fragment</Filter>
     </None>
-    <None Include="bin\data\shaders\vertex\simple.vert">
-      <Filter>Resource Files\shaders\vertex</Filter>
+    <None Include="data\Shaders\Vertex\simple.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
   </ItemGroup>
 </Project>
