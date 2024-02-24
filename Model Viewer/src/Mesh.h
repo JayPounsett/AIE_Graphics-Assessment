@@ -19,7 +19,7 @@ public:
   virtual void draw();
 
 protected:
-  unsigned int m_triCount;
+  const unsigned int m_triCount = 2;
 
   // Vertex Array Object, Vertex Buffer Object, Index Buffer Object
   unsigned int m_vao, m_vbo, m_ibo;
