@@ -27,13 +27,13 @@ void Mesh::initialiseQuad()
     // Defining two triangles for a quad
     Vertex vertices[6];
 
-    vertices[0].position = { -0.5f, 0, 0.5f, 1 };
-    vertices[1].position = { 0.5f, 0, 0.5f, 1 };
-    vertices[2].position = { -0.5f, 0, -0.5f, 1 };
+    vertices[0].m_position = { -0.5f, 0, 0.5f, 1 };
+    vertices[1].m_position = { 0.5f, 0, 0.5f, 1 };
+    vertices[2].m_position = { -0.5f, 0, -0.5f, 1 };
 
-    vertices[3].position = { -0.5f, 0, 0.5f, 1 };
-    vertices[4].position = { 0.5f, 0, 0.5f, 1 };
-    vertices[5].position = { 0.5f, 0, -0.5f, 1 };
+    vertices[3].m_position = { -0.5f, 0, 0.5f, 1 };
+    vertices[4].m_position = { 0.5f, 0, 0.5f, 1 };
+    vertices[5].m_position = { 0.5f, 0, -0.5f, 1 };
 
     // Fill the vertex buffer
     glBufferData(GL_ARRAY_BUFFER, 6 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
@@ -50,8 +50,9 @@ void Mesh::initialiseQuad()
     glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-    // Commented variable out as it is now set as a const variable with a value of 2 within Mesh.h
-    // m_triCount = 2;
+    // Commented below out as variable is set as a const in Mesh.h
+    //// Quad has two triangles
+    //m_triCount = 2;
 }
 
 void Mesh::draw()

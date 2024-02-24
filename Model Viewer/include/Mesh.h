@@ -8,8 +8,8 @@ class Mesh {
 
 public:
   struct Vertex {
-    glm::vec4 position;
-    glm::vec4 normal;
+    glm::vec4 m_position;
+    glm::vec4 m_normal;
   };
 
   Mesh() : m_triCount(0), m_vao(0), m_vbo(0), m_ibo(0) {}
