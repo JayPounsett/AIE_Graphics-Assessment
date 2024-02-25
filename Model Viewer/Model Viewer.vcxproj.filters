@@ -25,6 +25,12 @@
     <Filter Include="Resource Files\ImGUI">
       <UniqueIdentifier>{1dbc9cce-b323-4189-9773-8025a792e448}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\Models">
+      <UniqueIdentifier>{31827ad3-23d8-4bd7-953f-33e62f7143de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Textures">
+      <UniqueIdentifier>{0ef70fec-0bd4-4919-bd47-14490b36c236}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -56,6 +62,12 @@
     </ClCompile>
     <ClCompile Include="src\imgui_glfw3.cpp">
       <Filter>Resource Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Instance.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,19 +104,60 @@
     <ClInclude Include="include\imgui_glfw3.h">
       <Filter>Resource Files\ImGUI</Filter>
     </ClInclude>
+    <ClInclude Include="include\Texture.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Instance.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\Shader\Fragment\simple.frag">
+    <None Include="data\Model\Buddha.mtl">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="data\Model\Bunny.mtl">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="data\Model\Dragon.mtl">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="data\Model\Lucy.mtl">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="data\Model\soulspear.mtl">
+      <Filter>Resource Files\Models</Filter>
+    </None>
+    <None Include="data\Shaders\Fragment\normalMapShader.frag">
       <Filter>Resource Files\Shaders\Fragment</Filter>
     </None>
-    <None Include="data\Shader\Vertex\simple.vert">
-      <Filter>Resource Files\Shaders\Vertex</Filter>
-    </None>
-    <None Include="data\Shader\Fragment\phong.frag">
+    <None Include="data\Shaders\Fragment\phongShader.frag">
       <Filter>Resource Files\Shaders\Fragment</Filter>
     </None>
-    <None Include="data\Shader\Vertex\phong.vert">
+    <None Include="data\Shaders\Fragment\simpleShader.frag">
+      <Filter>Resource Files\Shaders\Fragment</Filter>
+    </None>
+    <None Include="data\Shaders\Vertex\normalMapShader.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
+    <None Include="data\Shaders\Vertex\phongShader.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
+    </None>
+    <None Include="data\Shaders\Vertex\simpleShader.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\Model\soulspear_diffuse.tga">
+      <Filter>Resource Files\Models</Filter>
+    </Image>
+    <Image Include="data\Model\soulspear_normal.tga">
+      <Filter>Resource Files\Models</Filter>
+    </Image>
+    <Image Include="data\Model\soulspear_specular.tga">
+      <Filter>Resource Files\Models</Filter>
+    </Image>
+    <Image Include="data\Textures\numbered_grid.tga">
+      <Filter>Resource Files\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>

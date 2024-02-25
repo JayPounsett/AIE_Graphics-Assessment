@@ -1,9 +1,18 @@
 # Format Style Options - Created with Clang Power Tools
 ---
+AlignAfterOpenBracket: Align
+AllowAllConstructorInitializersOnNextLine: false
+AllowShortBlocksOnASingleLine: Always
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortLambdasOnASingleLine: All
+AllowShortEnumsOnASingleLine: true
+AllowShortFunctionsOnASingleLine: All
+AllowShortIfStatementsOnASingleLine: Always
+AllowShortLoopsOnASingleLine: true
 BasedOnStyle: WebKit
-AllowAllConstructorInitializersOnNextLine: False
-ConstructorInitializerAllOnOneLineOrOnePerLine: True
 BreakBeforeBraces: Allman
-ColumnLimit: 80
+ColumnLimit: 100
+CompactNamespaces: true
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 TabWidth: 4
 ...

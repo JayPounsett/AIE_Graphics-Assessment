@@ -24,6 +24,7 @@
   <ItemGroup>
     <ClCompile Include="..\dep\imgui\imgui.cpp" />
     <ClCompile Include="..\dep\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\imgui_glfw3.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -32,6 +33,7 @@
     <ClCompile Include="src\glad.c" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Shader.cpp" />
+    <ClCompile Include="src\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\dep\imgui\imconfig.h" />
@@ -45,12 +47,27 @@
     <ClInclude Include="include\glad.h" />
     <ClInclude Include="include\khrplatform.h" />
     <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\Texture.h" />
+    <ClInclude Include="include\Instance.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\Shader\Fragment\phong.frag" />
-    <None Include="data\Shader\Fragment\simple.frag" />
-    <None Include="data\Shader\Vertex\phong.vert" />
-    <None Include="data\Shader\Vertex\simple.vert" />
+    <None Include="data\Model\Buddha.mtl" />
+    <None Include="data\Model\Bunny.mtl" />
+    <None Include="data\Model\Dragon.mtl" />
+    <None Include="data\Model\Lucy.mtl" />
+    <None Include="data\Model\soulspear.mtl" />
+    <None Include="data\Shaders\Fragment\normalMapShader.frag" />
+    <None Include="data\Shaders\Fragment\phongShader.frag" />
+    <None Include="data\Shaders\Fragment\simpleShader.frag" />
+    <None Include="data\Shaders\Vertex\normalMapShader.vert" />
+    <None Include="data\Shaders\Vertex\phongShader.vert" />
+    <None Include="data\Shaders\Vertex\simpleShader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="data\Model\soulspear_diffuse.tga" />
+    <Image Include="data\Model\soulspear_normal.tga" />
+    <Image Include="data\Model\soulspear_specular.tga" />
+    <Image Include="data\Textures\numbered_grid.tga" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -112,7 +129,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\temp\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dep\stb;$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)dep\glfw\lib-vc2022;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)dep\glfw\lib-vc2022;</LibraryPath>
     <SourcePath>
     </SourcePath>
@@ -127,7 +144,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\temp\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dep\stb;$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)dep\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dep\glfw\lib-vc2022</LibraryPath>
     <SourcePath>
     </SourcePath>
@@ -142,7 +159,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\temp\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dep\stb;$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)dep\glfw\lib-vc2022;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(SolutionDir)dep\glfw\lib-vc2022;</LibraryPath>
     <SourcePath>
     </SourcePath>
@@ -157,7 +174,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)bin\</OutDir>
     <IntDir>$(SolutionDir)bin\temp\$(Platform)\$(Configuration)\</IntDir>
-    <IncludePath>$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)dep\stb;$(SolutionDir)dep\imgui;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\include;$(ProjectDir)include\;$(SolutionDir)dep\glm;$(SolutionDir)dep\glfw\include;$(VC_IncludePath);$(WindowsSDK_IncludePath)</IncludePath>
     <LibraryPath>$(SolutionDir)dep\assimp\out\build\x64-$(Configuration)\lib;$(SolutionDir)dep\glfw\lib-vc2022;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(SolutionDir)dep\glfw\lib-vc2022;</LibraryPath>
     <SourcePath>
     </SourcePath>
