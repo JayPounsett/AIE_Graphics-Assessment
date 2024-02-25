@@ -1,6 +1,8 @@
 # Format Style Options - Created with Clang Power Tools
 ---
+
 BasedOnStyle: WebKit
 BreakBeforeBraces: Allman
 TabWidth: 4
+AllowAllConstructorInitializersOnNextLine: false
 ...
