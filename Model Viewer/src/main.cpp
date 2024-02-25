@@ -6,11 +6,11 @@ int main()
 {
     Application* app = new Application();
 
-    if (app->startup() == true) {
-        while (app->update()) {
-            app->draw();
+    if (app->Startup() == true) {
+        while (app->Update()) {
+            app->Draw();
         }
-        app->shutdown();
+        app->Shutdown();
     }
     delete app;
     return 0;

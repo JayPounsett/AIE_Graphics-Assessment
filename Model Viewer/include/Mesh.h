@@ -4,23 +4,41 @@
 // Mesh class that hold mesh data (ibo vao etc.) then a mesh renderer that
 // actually handles rendering of the mesh
 
+namespace aie {
+class ShaderProgram;
+}
+
 class Mesh {
 
 public:
   struct Vertex {
-    glm::vec4 m_position;
-    glm::vec4 m_normal;
+    glm::vec4 position;
+    glm::vec4 normal;
+    glm::vec2 texCoord;
   };
 
-  Mesh() : m_triCount(0), m_vao(0), m_vbo(0), m_ibo(0) {}
+  Mesh() : triCount(0), vao(0), vbo(0), ibo(0) {}
   virtual ~Mesh();
 
-  void initialiseQuad();
-  virtual void draw();
+  void InitialiseQuad();
+  void Initialise(unsigned int vertexCount, const Vertex *vertices,
+                  unsigned int indexCount = 0, unsigned int *indices = nullptr);
+
+  void InitialiseFromFile(const char *fileName);
+  virtual void Draw();
+
+  void ApplyMaterial(aie::ShaderProgram *shader);
+  void LoadMaterial(const char *fileName);
 
 protected:
-  const unsigned int m_triCount = 2;
+  unsigned int triCount;
 
   // Vertex Array Object, Vertex Buffer Object, Index Buffer Object
-  unsigned int m_vao, m_vbo, m_ibo;
+  unsigned int vao, vbo, ibo;
+
+  glm::vec3 Ka = {0.25, 0.25, 0.25}; // ambient colour of the surface
+  glm::vec3 Kd = {0.25, 0.25, 0.25}; // diffuse colour of the surface
+  glm::vec3 Ks = {0.25, 0.25, 0.25}; // specular colour of the surface
+
+  float specularPower; // tightness of specular highlights
 };

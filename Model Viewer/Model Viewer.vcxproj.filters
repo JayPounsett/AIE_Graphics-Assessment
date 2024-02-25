@@ -22,6 +22,9 @@
     <Filter Include="Resource Files\Shaders\Vertex">
       <UniqueIdentifier>{f8c1119c-b229-417e-b7a1-5966c94a1466}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Resource Files\ImGUI">
+      <UniqueIdentifier>{1dbc9cce-b323-4189-9773-8025a792e448}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -41,6 +44,18 @@
     </ClCompile>
     <ClCompile Include="src\Shader.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dep\imgui\imgui.cpp">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\dep\imgui\imgui_draw.cpp">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClCompile>
+    <ClCompile Include="src\imgui_glfw3.cpp">
+      <Filter>Resource Files\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -62,12 +77,27 @@
     <ClInclude Include="include\Shader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dep\imgui\imconfig.h">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dep\imgui\imgui.h">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\dep\imgui\imgui_internal.h">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="include\imgui_glfw3.h">
+      <Filter>Resource Files\ImGUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\Shaders\Fragment\simple.frag">
+    <None Include="data\Shader\Fragment\simple.frag">
       <Filter>Resource Files\Shaders\Fragment</Filter>
     </None>
-    <None Include="data\Shaders\Vertex\simple.vert">
+    <None Include="data\Shader\Vertex\simple.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
   </ItemGroup>

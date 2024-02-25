@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GLFW/glfw3.h"
+#include "Camera.h"
 #include "Mesh.h"
 #include "Shader.h"
 #include "glad.h"
@@ -15,45 +16,70 @@
 // ApplyMaterial() etc
 // ... and so on
 
-class Application
-{
+class Application {
 public:
-    bool startup();
-    bool update();
-    void draw();
-    void shutdown();
+  bool Startup();
+  bool Update();
+  void Draw();
+  void Shutdown();
+
+  // Singleton Pattern
+  static Application *get() { return instance; }
+
+  glm::vec2 getMousePosition() { return mousePosition; }
+  glm::vec2 getMouseDelta() { return mousePosition - lastMousePosition; }
+
+  // Set up mouse input
+  static void SetMousePosition(GLFWwindow *window, double x, double y);
 
 protected:
-    // Window Variables
-    GLFWwindow* m_window;
-    int m_windowWidth = 1280;
-    int m_windowHeight = 720;
+  static Application *instance;
 
-    // Colour Variables
-    glm::vec4 WHITE { 1, 1, 1, 1 };
-    glm::vec4 BLACK { 0, 0, 0, 1 };
+  // Window Variables
+  GLFWwindow *window;
+  int windowWidth = 1280;
+  int windowHeight = 720;
 
-    // Meshes & Transforms
-protected:
-    aie::ShaderProgram m_shader;
-    Mesh m_quadMesh;
-    glm::mat4 m_quadTransform;
+  // Colour Variables
+  glm::vec4 WHITE{1, 1, 1, 1};
+  glm::vec4 BLACK{0, 0, 0, 1};
 
-    // Grid & Viewport
+  // Meshes & Transforms
+  aie::ShaderProgram shader;
+
+  Mesh quadMesh;
+  glm::mat4 quadTransform;
+
+  Mesh bunnyMesh;
+  glm::mat4 bunnyTransform;
+
+  // Projection & View
+  glm::mat4 projection;
+  glm::mat4 view;
+
+  // glm::vec3 eyePosition = glm::vec3{10, 10, 10};
+  // glm::vec3 lookAtPosition = glm::vec3(1);
+  // glm::vec3 upDirection = glm::vec3(0, 1, 0);
+
+  // float fov90 = glm::pi<float>() * 0.25f;
+  // float aspect16x9 = 16 / 9.f;
+  // float nearClip = 0.1f;
+  // float farClip = 1000.f;
+
+  // Camera
+  Camera camera;
+  glm::vec2 mousePosition;
+  glm::vec2 lastMousePosition;
+
+  // Lighting
+  struct Light {
+    glm::vec3 direction;
+    glm::vec3 colour;
+  };
+
+  Light light;
+  glm::vec3 ambientLight;
+
 private:
-    void createGrid() const;
-    void createViewPort() const;
-
-    // Projection & View
-    // glm::vec3 eyePosition = glm::vec3{10, 10, 10};
-    // glm::vec3 lookAtPosition = glm::vec3(1);
-    // glm::vec3 upDirection = glm::vec3(0, 1, 0);
-
-    // float fov90 = glm::pi<float>() * 0.25f;
-    // float aspect16x9 = 16 / 9.f;
-    // float nearClip = 0.1f;
-    // float farClip = 1000.f;
-
-    glm::mat4 m_view = glm::lookAt( glm::vec3( 10, 10, 10 ), glm::vec3( 1 ), glm::vec3( 0, 1, 0 ) );
-    glm::mat4 m_projection = glm::perspective( glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f );
+  void CreateGrid() const;
 };
