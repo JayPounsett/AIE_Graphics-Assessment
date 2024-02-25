@@ -24,38 +24,39 @@ public:
   void Shutdown();
 
   // Singleton Pattern
-  static Application *get() { return instance; }
+  static Application *Get() { return p_instance; }
 
-  glm::vec2 getMousePosition() { return mousePosition; }
-  glm::vec2 getMouseDelta() { return mousePosition - lastMousePosition; }
+  glm::vec2 getMousePosition() { return m_mousePosition; }
+  glm::vec2 GetMouseDelta() { return m_mousePosition - m_lastMousePosition; }
 
   // Set up mouse input
   static void SetMousePosition(GLFWwindow *window, double x, double y);
 
 protected:
-  static Application *instance;
+  static Application *p_instance;
 
   // Window Variables
-  GLFWwindow *window;
-  int windowWidth = 1280;
-  int windowHeight = 720;
+  GLFWwindow *p_window;
+  int m_windowWidth = 1280;
+  int m_windowHeight = 720;
 
   // Colour Variables
   glm::vec4 WHITE{1, 1, 1, 1};
   glm::vec4 BLACK{0, 0, 0, 1};
 
   // Meshes & Transforms
-  aie::ShaderProgram shader;
+  aie::ShaderProgram m_shaderSimple;
+  aie::ShaderProgram m_shaderPhong;
 
-  Mesh quadMesh;
-  glm::mat4 quadTransform;
+  Mesh m_quadMesh;
+  glm::mat4 m_quadTransform;
 
-  Mesh bunnyMesh;
-  glm::mat4 bunnyTransform;
+  Mesh m_bunnyMesh;
+  glm::mat4 m_bunnyTransform;
 
   // Projection & View
-  glm::mat4 projection;
-  glm::mat4 view;
+  glm::mat4 m_projection;
+  glm::mat4 m_view;
 
   // glm::vec3 eyePosition = glm::vec3{10, 10, 10};
   // glm::vec3 lookAtPosition = glm::vec3(1);
@@ -67,9 +68,9 @@ protected:
   // float farClip = 1000.f;
 
   // Camera
-  Camera camera;
-  glm::vec2 mousePosition;
-  glm::vec2 lastMousePosition;
+  Camera m_camera;
+  glm::vec2 m_mousePosition;
+  glm::vec2 m_lastMousePosition;
 
   // Lighting
   struct Light {
@@ -77,8 +78,8 @@ protected:
     glm::vec3 colour;
   };
 
-  Light light;
-  glm::vec3 ambientLight;
+  Light m_light;
+  glm::vec3 m_ambientLight;
 
 private:
   void CreateGrid() const;

@@ -47,7 +47,9 @@
     <ClInclude Include="include\Shader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="data\Shader\Fragment\phong.frag" />
     <None Include="data\Shader\Fragment\simple.frag" />
+    <None Include="data\Shader\Vertex\phong.vert" />
     <None Include="data\Shader\Vertex\simple.vert" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

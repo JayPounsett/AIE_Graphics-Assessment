@@ -54,14 +54,14 @@ void Mesh::InitialiseQuad() {
 
   // enable second element as normal
   glEnableVertexAttribArray(1);
-  glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void *)16);
+  glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)16);
 
   // unbind buffers
   glBindVertexArray(0);
   glBindBuffer(GL_ARRAY_BUFFER, 0);
 
   // quad has two triangles
-  triCount = 2;
+  m_triCount = 2;
 }
 
 void Mesh::Initialise(unsigned int vertexCount, const Vertex *vertices,
@@ -102,9 +102,9 @@ void Mesh::Initialise(unsigned int vertexCount, const Vertex *vertices,
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexCount * sizeof(unsigned int),
                  indices, GL_STATIC_DRAW);
 
-    triCount = indexCount / 3;
+    m_triCount = indexCount / 3;
   } else {
-    triCount = vertexCount / 3;
+    m_triCount = vertexCount / 3;
   }
 
   // unbind buffers
@@ -196,8 +196,8 @@ void Mesh::Draw() {
 
   // Using indices or just vertices
   if (ibo != 0) {
-    glDrawElements(GL_TRIANGLES, 3 * triCount, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3 * m_triCount, GL_UNSIGNED_INT, 0);
   } else {
-    glDrawArrays(GL_TRIANGLES, 0, 3 * triCount);
+    glDrawArrays(GL_TRIANGLES, 0, 3 * m_triCount);
   }
 }

@@ -100,5 +100,11 @@
     <None Include="data\Shader\Vertex\simple.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
+    <None Include="data\Shader\Fragment\phong.frag">
+      <Filter>Resource Files\Shaders\Fragment</Filter>
+    </None>
+    <None Include="data\Shader\Vertex\phong.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
+    </None>
   </ItemGroup>
 </Project>
