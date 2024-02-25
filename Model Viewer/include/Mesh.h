@@ -11,7 +11,6 @@ class ShaderProgram;
 
 class Mesh
 {
-
 public:
     struct Vertex
     {
@@ -20,13 +19,7 @@ public:
         glm::vec2 texCoord;
     };
 
-    Mesh()
-        : m_triCount(0)
-        , vao(0)
-        , vbo(0)
-        , ibo(0)
-    {
-    }
+    Mesh() : m_triCount(0), vao(0), vbo(0), ibo(0) { }
     virtual ~Mesh();
 
     void InitialiseQuad();

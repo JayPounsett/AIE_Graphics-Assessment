@@ -1,13 +1,9 @@
 # Format Style Options - Created with Clang Power Tools
 ---
-AllowAllArgumentsOnNextLine: false
-AllowAllConstructorInitializersOnNextLine: false
-AllowAllParametersOfDeclarationOnNextLine: false
-AllowShortBlocksOnASingleLine: Always
-AllowShortFunctionsOnASingleLine: All
-AllowShortIfStatementsOnASingleLine: Always
-AllowShortLoopsOnASingleLine: true
 BasedOnStyle: WebKit
+AllowAllConstructorInitializersOnNextLine: False
+ConstructorInitializerAllOnOneLineOrOnePerLine: True
 BreakBeforeBraces: Allman
+ColumnLimit: 80
 TabWidth: 4
 ...

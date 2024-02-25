@@ -7,14 +7,12 @@ Camera::~Camera() { }
 
 glm::mat4 Camera::GetViewMatrix() const
 {
-    return glm::lookAt(position, position + forward,
-        up);
+    return glm::lookAt(position, position + forward, up);
 }
 
 glm::mat4 Camera::GetProjectionMatrix(float w, float h) const
 {
-    return glm::perspective(fov90, w / h,
-        nearClip, farClip);
+    return glm::perspective(fov90, w / h, nearClip, farClip);
 }
 
 void Camera::Update(float dt, GLFWwindow* window)
