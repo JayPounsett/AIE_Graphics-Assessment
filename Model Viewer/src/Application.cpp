@@ -6,27 +6,21 @@
 
 Application* Application::m_instance;
 
-bool Application::Startup()
-{
-    if (glfwInit() == false)
-    {
-        return false;
-    }
+bool Application::Startup() {
+    if (glfwInit() == false) { return false; }
 
     // Create Window
     m_window
         = glfwCreateWindow(m_windowWidth, m_windowHeight, "OpenGL Class Project", nullptr, nullptr);
 
-    if (m_window == nullptr)
-    {
+    if (m_window == nullptr) {
         glfwTerminate();
         return false;
     }
 
     glfwMakeContextCurrent(m_window); // Sets specified window as the one that will be used
 
-    if (!gladLoadGL())
-    {
+    if (!gladLoadGL()) {
         glfwDestroyWindow(m_window);
         glfwTerminate();
         return false;
@@ -54,26 +48,32 @@ bool Application::Startup()
     m_ambientLight = { 0.25f, 0.25f, 0.25f };
 
     // Load shaders
-    // Shader List: simple, phongNormal, phongTextured
-    //m_shader.loadShader(aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
-    //m_shader.loadShader(aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/simpleShader.frag");
-    //m_phongShader.loadShader(aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongShader.vert");
-    //m_phongShader.loadShader(
-    //    aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/phongShader.frag");
-    m_normalMapShader.loadShader(
-        aie::eShaderStage::VERTEX, "./Shaders/Vertex/normalMapShader.vert");
-    m_normalMapShader.loadShader(
-        aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/normalMapShader.frag");
+    // Shader List: simpleShader, phongNormal, phongTextured
+    //
+    m_simpleShader.loadShader(aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
+    m_simpleShader.loadShader(aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/simpleShader.frag");
 
-    //if (m_phongShader.link() == false)
-    //{
-    //    printf("Shader Error: %s\n", m_phongShader.getLastError());
-    //    return false;
-    //}
+    m_simplePhongShader.loadShader(aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongShader.vert");
+    m_simplePhongShader.loadShader(aie::eShaderStage::FRAGMENT,
+                                   "./Shaders/Fragment/phongShader.frag");
 
-    if (m_normalMapShader.link() == false)
-    {
-        printf("Shader Error: %s\n", m_normalMapShader.getLastError());
+    m_normalPhongShader.loadShader(aie::eShaderStage::VERTEX,
+                                   "./Shaders/Vertex/normalPhongShader.vert");
+    m_normalPhongShader.loadShader(aie::eShaderStage::FRAGMENT,
+                                   "./Shaders/Fragment/normalPhongShader.frag");
+
+    if (m_simpleShader.link() == false) {
+        printf("Shader Error: %s\n", m_simpleShader.getLastError());
+        return false;
+    }
+
+    if (m_simplePhongShader.link() == false) {
+        printf("Shader Error: %s\n", m_simplePhongShader.getLastError());
+        return false;
+    }
+
+    if (m_normalPhongShader.link() == false) {
+        printf("Shader Error: %s\n", m_normalPhongShader.getLastError());
         return false;
     }
 
@@ -92,21 +92,20 @@ bool Application::Startup()
     // Load Soul Spear from file
     m_soulspearMesh.InitialiseFromFile("./Models/soulspear.obj");
     m_soulspearMesh.LoadMaterial("./Models/soulspear.mtl");
-    m_soulspearTransform
-        = { 0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 1 }; // 4th last digit will move on X-axis, class had it as 5
+    m_soulspearTransform = {
+        0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0.75, 0, 5, 0, 0, 1
+    }; // 4th last digit will move on X-axis, class had it as 5
 
     return true;
 }
 
 // Set Mouse Position Function
-void Application::SetMousePosition(GLFWwindow* window, double x, double y)
-{
+void Application::SetMousePosition(GLFWwindow* window, double x, double y) {
     m_instance->m_mousePosition.x = (float)x;
     m_instance->m_mousePosition.y = (float)y;
 }
 
-bool Application::Update()
-{
+bool Application::Update() {
     aie::ImGui_NewFrame();
     ImGui::Begin("Light Settings");
     ImGui::DragFloat3("Sunlight Direction", &m_light.direction[0], 0.1f, -1.0f, 1.0f);
@@ -121,16 +120,14 @@ bool Application::Update()
 
     // Close window on ESC or pressing X in top right
     if (glfwWindowShouldClose(m_window) == true
-        || glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-    {
+        || glfwGetKey(m_window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
         return false;
     }
 
     return true;
 }
 
-void Application::Draw()
-{
+void Application::Draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 pv
@@ -147,43 +144,54 @@ void Application::Draw()
 
     aie::Gizmos::draw(pv);
 
+    // Idealy, a MeshRenderer would handle working out which shader is being used, it would bundle
+    // all that are using the same one together, process those and then do the next batch, etc. 
+    // (Check Week 05 to see what he said around the 50 minute mark)
+    
     // Bind shader
-    //m_shaderPhongNormal.bind();
-    m_normalMapShader.bind();
+    m_simplePhongShader.bind();
 
     // Bind lighting
-    //m_shaderPhongNormal.bindUniform("AmbientColour", m_ambientLight);
-    //m_shaderPhongNormal.bindUniform("LightColour", m_light.colour);
-    //m_shaderPhongNormal.bindUniform("LightDirection", m_light.direction);
-    m_normalMapShader.bindUniform("AmbientColour", m_ambientLight);
-    m_normalMapShader.bindUniform("LightColour", m_light.colour);
-    m_normalMapShader.bindUniform("LightDirection", m_light.direction);
+    m_simplePhongShader.bindUniform("AmbientColour", m_ambientLight);
+    m_simplePhongShader.bindUniform("LightColour", m_light.colour);
+    m_simplePhongShader.bindUniform("LightDirection", m_light.direction);
 
     // Bind camera position
-    //m_shaderPhongNormal.bindUniform("CameraPosition", m_camera.GetPosition());
-    m_normalMapShader.bindUniform("CameraPosition", m_camera.GetPosition());
+    m_simplePhongShader.bindUniform("CameraPosition", m_camera.GetPosition());
 
-    //// Quad
-    //auto pvm = pv * m_quadTransform;
-    //m_normalMapShader.bindUniform("ProjectionViewModel", pvm);
-    //m_normalMapShader.bindUniform("ModelMatrix", m_quadTransform);
-    //m_gridTexture.bind(0);
-    //m_normalMapShader.bindUniform("DiffuseTexture", 0);
-    //m_quadMesh.ApplyMaterial(&m_normalMapShader);
-    //m_quadMesh.Draw();
+    // Quad
+    auto pvm = pv * m_quadTransform;
+    m_simplePhongShader.bindUniform("ProjectionViewModel", pvm);
+    m_simplePhongShader.bindUniform("ModelMatrix", m_quadTransform);
+    m_gridTexture.bind(0);
+    m_simplePhongShader.bindUniform("diffuseTex", 0);
+    m_quadMesh.ApplyMaterial(&m_simplePhongShader);
+    m_quadMesh.Draw();
 
-    //// Bunny
-    //pvm = pv * m_bunnyTransform;
-    //m_normalMapShader.bindUniform("ProjectionViewModel", pvm);
-    //m_normalMapShader.bindUniform("ModelMatrix", m_bunnyTransform);
-    //m_bunnyMesh.ApplyMaterial(&m_normalMapShader);
-    //m_bunnyMesh.Draw();
+    // Bunny
+    pvm = pv * m_bunnyTransform;
+    m_simplePhongShader.bindUniform("ProjectionViewModel", pvm);
+    m_simplePhongShader.bindUniform("ModelMatrix", m_bunnyTransform);
+    m_simplePhongShader.bindUniform("diffuseTex", 0);
+    m_bunnyMesh.ApplyMaterial(&m_simplePhongShader);
+    m_bunnyMesh.Draw();
+
+    // Bind shader
+    m_normalPhongShader.bind();
+
+    // Bind lighting
+    m_normalPhongShader.bindUniform("AmbientColour", m_ambientLight);
+    m_normalPhongShader.bindUniform("LightColour", m_light.colour);
+    m_normalPhongShader.bindUniform("LightDirection", m_light.direction);
+
+    // Bind camera position
+    m_normalPhongShader.bindUniform("CameraPosition", m_camera.GetPosition());
 
     // Soulspear
-    auto pvm = pv * m_soulspearTransform;
-    m_normalMapShader.bindUniform("ProjectionViewModel", pvm);
-    m_normalMapShader.bindUniform("ModelMatrix", m_soulspearTransform);
-    m_soulspearMesh.ApplyMaterial(&m_normalMapShader);
+    pvm = pv * m_soulspearTransform;
+    m_normalPhongShader.bindUniform("ProjectionViewModel", pvm);
+    m_normalPhongShader.bindUniform("ModelMatrix", m_soulspearTransform);
+    m_soulspearMesh.ApplyMaterial(&m_normalPhongShader);
     m_soulspearMesh.Draw();
 
     ImGui::Render();
@@ -192,8 +200,7 @@ void Application::Draw()
     glfwPollEvents(); // Windows related stuff - moving the window, etc.
 }
 
-void Application::Shutdown()
-{
+void Application::Shutdown() {
     aie::ImGui_Shutdown();
     aie::Gizmos::destroy();
     glfwDestroyWindow(m_window);
@@ -204,13 +211,11 @@ void Application::Shutdown()
 /// Creates a 10x10 grid of black lines with the centre
 /// crossed lines being white.
 /// </summary>
-void Application::CreateGrid() const
-{
-    for (int i = 0; i < 21; i++)
-    {
-        aie::Gizmos::addLine(
-            glm::vec3(-10 + i, 0, 10), glm::vec3(-10 + i, 0, -10), i == 10 ? WHITE : BLACK);
-        aie::Gizmos::addLine(
-            glm::vec3(10, 0, -10 + i), glm::vec3(-10, 0, -10 + i), i == 10 ? WHITE : BLACK);
+void Application::CreateGrid() const {
+    for (int i = 0; i < 21; i++) {
+        aie::Gizmos::addLine(glm::vec3(-10 + i, 0, 10), glm::vec3(-10 + i, 0, -10),
+                             i == 10 ? WHITE : BLACK);
+        aie::Gizmos::addLine(glm::vec3(10, 0, -10 + i), glm::vec3(-10, 0, -10 + i),
+                             i == 10 ? WHITE : BLACK);
     }
 }

@@ -18,9 +18,9 @@ uniform vec3 Kd;             // Diffuse material colour
 uniform vec3 Ks;             // Specular material colour 
 uniform float SpecularPower; // Tightness of specular highlights
 
-uniform sampler2D DiffuseTexture;
-uniform sampler2D SpecularTexture;
-uniform sampler2D NormalTexture; 
+uniform sampler2D diffuseTex;
+uniform sampler2D specularTex;
+uniform sampler2D normalTex; 
 
 out vec4 FragColour;
 
@@ -31,7 +31,9 @@ void main(){
 	vec3 B = normalize(vBiTangent);
 	vec3 L = normalize(LightDirection);
 
+	vec3 textureNormal = texture(normalTex, vTexCoord).rgb;
 	mat3 TBN = mat3(T, B, N);
+	N = TBN * (textureNormal * 2 - 1);
 
 	// Calculate lambert term (negate light direction)
 	float lambertTerm = max(0, min( 1, dot(N, -L)));
@@ -42,15 +44,12 @@ void main(){
 
 	float specularTerm = pow( max( 0, dot( R, V ) ), SpecularPower );
 	
-	vec3 textureDiffuse = texture(DiffuseTexture, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
-	vec3 textureSpecular = texture(SpecularTexture, vTexCoord).rgb;
-	vec3 textureNormal = texture(NormalTexture, vTexCoord).rgb;
-
-	N = TBN * (textureNormal * 2 - 1);
+	vec3 textureDiffuse  = texture(diffuseTex, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
+	vec3 textureSpecular = texture(specularTex, vTexCoord).rgb;
 	
-	vec3 ambient = AmbientColour * Ka * textureDiffuse;
-	vec3 diffuse = LightColour * Kd * lambertTerm * textureDiffuse;	
-	vec3 specular = LightColour * Ks * specularTerm;
+	vec3 ambient  = AmbientColour * Ka;
+	vec3 diffuse  = LightColour * Kd * lambertTerm * textureDiffuse;	
+	vec3 specular = LightColour * Ks * specularTerm * textureSpecular;
 
-	FragColour = vec4( N, 1 );
+	FragColour = vec4( ambient + diffuse + specular, 1 );
 }

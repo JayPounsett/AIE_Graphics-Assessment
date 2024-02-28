@@ -39,8 +39,8 @@ protected:
 
     // Window Variables
     GLFWwindow* m_window;
-    int m_windowWidth = 1600;
-    int m_windowHeight = 900;
+    int m_windowWidth = 1200;
+    int m_windowHeight = 720;
 
     Camera m_camera;
 
@@ -49,9 +49,9 @@ protected:
     glm::vec4 BLACK { 0, 0, 0, 1 };
 
     // Shaders
-    aie::ShaderProgram m_shader;
-    aie::ShaderProgram m_phongShader;
-    aie::ShaderProgram m_normalMapShader;
+    aie::ShaderProgram m_simpleShader;
+    aie::ShaderProgram m_simplePhongShader;
+    aie::ShaderProgram m_normalPhongShader;
 
     // Meshes
     Mesh m_quadMesh;

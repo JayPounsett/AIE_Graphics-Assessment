@@ -24,7 +24,6 @@
   <ItemGroup>
     <ClCompile Include="..\dep\imgui\imgui.cpp" />
     <ClCompile Include="..\dep\imgui\imgui_draw.cpp" />
-    <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\imgui_glfw3.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -47,26 +46,24 @@
     <ClInclude Include="include\glad.h" />
     <ClInclude Include="include\khrplatform.h" />
     <ClInclude Include="include\Shader.h" />
-    <ClInclude Include="include\Texture.h" />
-    <ClInclude Include="include\Instance.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="data\Model\Buddha.mtl" />
-    <None Include="data\Model\Bunny.mtl" />
-    <None Include="data\Model\Dragon.mtl" />
-    <None Include="data\Model\Lucy.mtl" />
-    <None Include="data\Model\soulspear.mtl" />
-    <None Include="data\Shaders\Fragment\normalMapShader.frag" />
+    <None Include="data\Models\Buddha.mtl" />
+    <None Include="data\Models\Bunny.mtl" />
+    <None Include="data\Models\Dragon.mtl" />
+    <None Include="data\Models\Lucy.mtl" />
+    <None Include="data\Models\soulspear.mtl" />
+    <None Include="data\Shaders\Fragment\normalPhongShader.frag" />
     <None Include="data\Shaders\Fragment\phongShader.frag" />
     <None Include="data\Shaders\Fragment\simpleShader.frag" />
-    <None Include="data\Shaders\Vertex\normalMapShader.vert" />
+    <None Include="data\Shaders\Vertex\normalPhongShader.vert" />
     <None Include="data\Shaders\Vertex\phongShader.vert" />
     <None Include="data\Shaders\Vertex\simpleShader.vert" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="data\Model\soulspear_diffuse.tga" />
-    <Image Include="data\Model\soulspear_normal.tga" />
-    <Image Include="data\Model\soulspear_specular.tga" />
+    <Image Include="data\Models\soulspear_diffuse.tga" />
+    <Image Include="data\Models\soulspear_normal.tga" />
+    <Image Include="data\Models\soulspear_specular.tga" />
     <Image Include="data\Textures\numbered_grid.tga" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

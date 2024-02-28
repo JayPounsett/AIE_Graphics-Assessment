@@ -113,7 +113,7 @@ private:
 		GizmoVertex v2;
 	};
 
-	unsigned int	m_normalMapShader;
+	unsigned int	m_normalPhongShader;
 
 	// line data
 	unsigned int	m_maxLines;

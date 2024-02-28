@@ -16,7 +16,7 @@ uniform vec3 Kd; // Diffuse material colour
 uniform vec3 Ks; // Specular material colour 
 uniform float SpecularPower; // Tightness of specular highlights
 
-uniform sampler2D DiffuseTexture;
+uniform sampler2D diffuseTex;
 
 out vec4 FragColour;
 
@@ -34,10 +34,10 @@ void main(){
 
 	float specularTerm = pow( max( 0, dot( R, V ) ), SpecularPower );
 	
-	vec3 textureDiffuse = texture(DiffuseTexture, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
+	vec3 textureDiffuse = texture(diffuseTex, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
 	
-	vec3 ambient = AmbientColour * Ka * textureDiffuse;
-	vec3 diffuse = LightColour * Kd * lambertTerm * textureDiffuse;	
+	vec3 ambient  = AmbientColour * Ka;
+	vec3 diffuse  = LightColour * Kd * lambertTerm * textureDiffuse;	
 	vec3 specular = LightColour * Ks * specularTerm;
 
 	FragColour = vec4( ambient + diffuse + specular, 1 );
