@@ -10,7 +10,7 @@ AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: Always
 AllowShortLoopsOnASingleLine: true
 BasedOnStyle: WebKit
-BreakBeforeBraces: Allman
+BreakBeforeBraces: Attach
 ColumnLimit: 100
 CompactNamespaces: true
 ConstructorInitializerAllOnOneLineOrOnePerLine: true
