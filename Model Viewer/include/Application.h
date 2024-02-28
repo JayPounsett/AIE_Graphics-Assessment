@@ -3,6 +3,7 @@
 #include "Camera.h"
 #include "GLFW/glfw3.h"
 #include "Mesh.h"
+#include "Scene.h"
 #include "Shader.h"
 #include "Texture.h"
 #include "glad.h"
@@ -17,8 +18,9 @@
 // ApplyMaterial() etc
 // ... and so on
 
-class Application
-{
+class Instance;
+
+class Application {
 public:
     bool Startup();
     bool Update();
@@ -36,11 +38,12 @@ public:
 
 protected:
     static Application* m_instance;
+    Scene* activeScene;
 
     // Window Variables
     GLFWwindow* m_window;
-    int m_windowWidth = 1200;
-    int m_windowHeight = 720;
+    const int WINDOW_WIDTH = 1600;
+    const int WINDOW_HEIGHT = 900;
 
     Camera m_camera;
 
@@ -61,32 +64,10 @@ protected:
     // Textures
     aie::Texture m_gridTexture;
 
-    // Transforms
-    glm::mat4 m_quadTransform;
-    glm::mat4 m_bunnyTransform;
-    glm::mat4 m_soulspearTransform;
-
     // Projection & View
     glm::mat4 m_projection;
     glm::mat4 m_view;
 
-    // glm::vec3 eyePosition = glm::vec3{10, 10, 10};
-    // glm::vec3 lookAtPosition = glm::vec3(1);
-    // glm::vec3 upDirection = glm::vec3(0, 1, 0);
-
-    // float fov90 = glm::pi<float>() * 0.25f;
-    // float aspect16x9 = 16 / 9.f;
-    // float nearClip = 0.1f;
-    // float farClip = 1000.f;
-
-    // Lighting
-    struct Light
-    {
-        glm::vec3 direction;
-        glm::vec3 colour;
-    };
-
-    Light m_light;
     glm::vec3 m_ambientLight;
 
 private:

@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "Camera.h"
 #include "Gizmos.h"
+#include "Instance.h"
+#include "Scene.h"
 #include "imgui_glfw3.h"
 #include <iostream>
 
@@ -11,7 +13,7 @@ bool Application::Startup() {
 
     // Create Window
     m_window
-        = glfwCreateWindow(m_windowWidth, m_windowHeight, "OpenGL Class Project", nullptr, nullptr);
+        = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "OpenGL Class Project", nullptr, nullptr);
 
     if (m_window == nullptr) {
         glfwTerminate();
@@ -42,14 +44,8 @@ bool Application::Startup() {
     m_view = glm::lookAt(glm::vec3(10, 10, 10), glm::vec3(0), glm::vec3(0, 1, 0));
     m_projection = glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
 
-    // Setting Light & Ambient Colours
-    m_light.direction = glm::normalize(glm::vec3(-1));
-    m_light.colour = { 1, 1, 1 };
-    m_ambientLight = { 0.25f, 0.25f, 0.25f };
-
     // Load shaders
     // Shader List: simpleShader, phongNormal, phongTextured
-    //
     m_simpleShader.loadShader(aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
     m_simpleShader.loadShader(aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/simpleShader.frag");
 
@@ -62,11 +58,6 @@ bool Application::Startup() {
     m_normalPhongShader.loadShader(aie::eShaderStage::FRAGMENT,
                                    "./Shaders/Fragment/normalPhongShader.frag");
 
-    if (m_simpleShader.link() == false) {
-        printf("Shader Error: %s\n", m_simpleShader.getLastError());
-        return false;
-    }
-
     if (m_simplePhongShader.link() == false) {
         printf("Shader Error: %s\n", m_simplePhongShader.getLastError());
         return false;
@@ -77,24 +68,36 @@ bool Application::Startup() {
         return false;
     }
 
-    // Quad Texture & Initialise
-    m_gridTexture.load("./Textures/numbered_grid.tga");
     m_quadMesh.InitialiseQuad();
+    m_quadMesh.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1), "./Textures/numbered_grid.tga");
 
-    // Quad Transform - Make it 10 units wide and high
-    m_quadTransform = { 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1 };
+    glm::mat4 quadTransform = { 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1 };
+    glm::mat4 bunnyTransform = { 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1 };
+    glm::mat4 soulspearTransform = {
+        1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, 0, 1
+    }; // 4th last digit will move on X-axis, class had it as 5
 
-    // Load Bunny from File
-    m_bunnyMesh.InitialiseFromFile("./Models/Bunny.obj");
-    m_bunnyMesh.LoadMaterial("./Models/Bunny.mtl");
-    m_bunnyTransform = { 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1 };
+    // Setting Light & Ambient Colours
+    Light light;
 
-    // Load Soul Spear from file
+    light.direction = glm::normalize(glm::vec3(-1));
+    light.colour = { 1, 1, 1 };
+
+    // Create Scene
+    activeScene
+        = new Scene(&m_camera, glm::vec2(WINDOW_WIDTH, WINDOW_HEIGHT), light, m_ambientLight);
+
+    // Load Models
     m_soulspearMesh.InitialiseFromFile("./Models/soulspear.obj");
     m_soulspearMesh.LoadMaterial("./Models/soulspear.mtl");
-    m_soulspearTransform = {
-        0.75, 0, 0, 0, 0, 0.75, 0, 0, 0, 0, 0.75, 0, 5, 0, 0, 1
-    }; // 4th last digit will move on X-axis, class had it as 5
+    m_bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
+    m_bunnyMesh.LoadMaterial("./Models/bunny.mtl");
+
+    // Add Instances to Scene
+    activeScene->AddInstance(new Instance(quadTransform, &m_quadMesh, &m_simplePhongShader));
+    activeScene->AddInstance(new Instance(bunnyTransform, &m_bunnyMesh, &m_simplePhongShader));
+    activeScene->AddInstance(
+        new Instance(soulspearTransform, &m_soulspearMesh, &m_normalPhongShader));
 
     return true;
 }
@@ -106,14 +109,10 @@ void Application::SetMousePosition(GLFWwindow* window, double x, double y) {
 }
 
 bool Application::Update() {
-    aie::ImGui_NewFrame();
-    ImGui::Begin("Light Settings");
-    ImGui::DragFloat3("Sunlight Direction", &m_light.direction[0], 0.1f, -1.0f, 1.0f);
-    ImGui::DragFloat3("Sunlight Colour", &m_light.colour[0], 0.1f, 0.0f, 2.0f);
-    ImGui::End();
-
     m_camera.Update(0.1f, m_window);
     m_lastMousePosition = m_mousePosition;
+
+    activeScene->Update();
 
     // Query time since application started
     float time = glfwGetTime();
@@ -131,7 +130,7 @@ void Application::Draw() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     glm::mat4 pv
-        = m_camera.GetProjectionMatrix(m_windowWidth, m_windowHeight) * m_camera.GetViewMatrix();
+        = m_camera.GetProjectionMatrix(WINDOW_WIDTH, WINDOW_HEIGHT) * m_camera.GetViewMatrix();
 
     aie::Gizmos::clear();
 
@@ -142,59 +141,15 @@ void Application::Draw() {
     // Create 10x10 grid
     CreateGrid();
 
-    aie::Gizmos::draw(pv);
+    aie::Gizmos::draw(activeScene->GetProjectionView());
 
     // Idealy, a MeshRenderer would handle working out which shader is being used, it would bundle
-    // all that are using the same one together, process those and then do the next batch, etc. 
+    // all that are using the same one together, process those and then do the next batch, etc.
     // (Check Week 05 to see what he said around the 50 minute mark)
-    
-    // Bind shader
-    m_simplePhongShader.bind();
 
-    // Bind lighting
-    m_simplePhongShader.bindUniform("AmbientColour", m_ambientLight);
-    m_simplePhongShader.bindUniform("LightColour", m_light.colour);
-    m_simplePhongShader.bindUniform("LightDirection", m_light.direction);
+    activeScene->Draw();
 
-    // Bind camera position
-    m_simplePhongShader.bindUniform("CameraPosition", m_camera.GetPosition());
-
-    // Quad
-    auto pvm = pv * m_quadTransform;
-    m_simplePhongShader.bindUniform("ProjectionViewModel", pvm);
-    m_simplePhongShader.bindUniform("ModelMatrix", m_quadTransform);
-    m_gridTexture.bind(0);
-    m_simplePhongShader.bindUniform("diffuseTex", 0);
-    m_quadMesh.ApplyMaterial(&m_simplePhongShader);
-    m_quadMesh.Draw();
-
-    // Bunny
-    pvm = pv * m_bunnyTransform;
-    m_simplePhongShader.bindUniform("ProjectionViewModel", pvm);
-    m_simplePhongShader.bindUniform("ModelMatrix", m_bunnyTransform);
-    m_simplePhongShader.bindUniform("diffuseTex", 0);
-    m_bunnyMesh.ApplyMaterial(&m_simplePhongShader);
-    m_bunnyMesh.Draw();
-
-    // Bind shader
-    m_normalPhongShader.bind();
-
-    // Bind lighting
-    m_normalPhongShader.bindUniform("AmbientColour", m_ambientLight);
-    m_normalPhongShader.bindUniform("LightColour", m_light.colour);
-    m_normalPhongShader.bindUniform("LightDirection", m_light.direction);
-
-    // Bind camera position
-    m_normalPhongShader.bindUniform("CameraPosition", m_camera.GetPosition());
-
-    // Soulspear
-    pvm = pv * m_soulspearTransform;
-    m_normalPhongShader.bindUniform("ProjectionViewModel", pvm);
-    m_normalPhongShader.bindUniform("ModelMatrix", m_soulspearTransform);
-    m_soulspearMesh.ApplyMaterial(&m_normalPhongShader);
-    m_soulspearMesh.Draw();
-
-    ImGui::Render();
+    ImGui::Render(); // Draw this last to render over the top
 
     glfwSwapBuffers(m_window); // Draw the front, then the back, and alternate.
     glfwPollEvents(); // Windows related stuff - moving the window, etc.
@@ -202,6 +157,9 @@ void Application::Draw() {
 
 void Application::Shutdown() {
     aie::ImGui_Shutdown();
+    
+    delete activeScene;
+
     aie::Gizmos::destroy();
     glfwDestroyWindow(m_window);
     glfwTerminate();

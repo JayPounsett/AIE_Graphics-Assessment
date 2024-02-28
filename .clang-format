@@ -1,14 +1,13 @@
 # Format Style Options - Created with Clang Power Tools
 ---
 AlignAfterOpenBracket: Align
-AllowAllConstructorInitializersOnNextLine: false
 AllowShortBlocksOnASingleLine: Always
 AllowShortCaseLabelsOnASingleLine: true
 AllowShortLambdasOnASingleLine: All
 AllowShortEnumsOnASingleLine: true
 AllowShortFunctionsOnASingleLine: All
 AllowShortIfStatementsOnASingleLine: Always
-AllowShortLoopsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
 BasedOnStyle: WebKit
 BreakBeforeBraces: Attach
 ColumnLimit: 100

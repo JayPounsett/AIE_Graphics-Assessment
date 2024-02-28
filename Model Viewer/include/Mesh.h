@@ -6,16 +6,13 @@
 // Mesh class that hold mesh data (ibo vao etc.) then a mesh renderer that
 // actually handles rendering of the mesh
 
-namespace aie
-{
+namespace aie {
 class ShaderProgram;
 }
 
-class Mesh
-{
+class Mesh {
 public:
-    struct Vertex
-    {
+    struct Vertex {
         glm::vec4 position;
         glm::vec4 normal;
         glm::vec2 texCoord;
@@ -30,9 +27,7 @@ public:
         , Ka { 0.25, 0.25, 0.25 }
         , Kd { 0.25, 0.25, 0.25 }
         , Ks { 0.25, 0.25, 0.25 }
-        , SpecularPower(2.0f)
-    {
-    }
+        , SpecularPower(2.0f) { }
 
     virtual ~Mesh();
 
@@ -45,6 +40,10 @@ public:
 
     void ApplyMaterial(aie::ShaderProgram* shader);
     void LoadMaterial(const char* fileName);
+    void CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks,
+                        const char* filePath);
+    /*void CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, float SpecularPower,
+                        const char* filePath);*/
 
 protected:
     unsigned int m_triCount;

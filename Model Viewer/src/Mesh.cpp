@@ -264,6 +264,14 @@ void Mesh::LoadMaterial(const char* fileName) {
     }
 }
 
+void Mesh::CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, const char* filePath) {
+    this->Ka = Ka;
+    this->Kd = Kd;
+    this->Ks = Ks;
+    
+    mapKd.load(filePath);
+}
+
 void Mesh::CalculateTangents(Vertex* vertices, unsigned int vertexCount,
                              const std::vector<unsigned int>& indices) {
     glm::vec4* tan1 = new glm::vec4[vertexCount * 2];

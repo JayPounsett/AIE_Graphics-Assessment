@@ -24,6 +24,8 @@
   <ItemGroup>
     <ClCompile Include="..\dep\imgui\imgui.cpp" />
     <ClCompile Include="..\dep\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Camera.cpp" />
     <ClCompile Include="src\imgui_glfw3.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -46,6 +48,8 @@
     <ClInclude Include="include\glad.h" />
     <ClInclude Include="include\khrplatform.h" />
     <ClInclude Include="include\Shader.h" />
+    <ClInclude Include="include\Instance.h" />
+    <ClInclude Include="include\Scene.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Models\Buddha.mtl" />
