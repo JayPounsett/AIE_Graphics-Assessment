@@ -20,59 +20,57 @@
 
 class Instance;
 
-class Application {
+class Application
+{
 public:
-    bool Startup();
-    bool Update();
-    void Draw();
-    void Shutdown();
+  bool Startup();
+  bool Update();
+  void Draw();
+  void Shutdown();
 
-    // Singleton Pattern
-    static Application* Get() { return m_instance; }
+  // Singleton Pattern
+  static Application* get() { return instance; }
 
-    glm::vec2 GetMousePosition() { return m_mousePosition; }
-    glm::vec2 GetMouseDelta() { return m_mousePosition - m_lastMousePosition; }
+  glm::vec2 GetMousePosition() { return mousePosition; }
+  glm::vec2 GetMouseDelta() { return mousePosition - lastMousePosition; }
 
-    // Set up mouse input
-    static void SetMousePosition(GLFWwindow* window, double x, double y);
+  // Set up mouse input
+  static void SetMousePosition(GLFWwindow* window, double x, double y);
 
 protected:
-    static Application* m_instance;
-    Scene* activeScene;
+  static Application* instance;
+  Scene* activeScene;
 
-    // Window Variables
-    GLFWwindow* m_window;
-    const int WINDOW_WIDTH = 1600;
-    const int WINDOW_HEIGHT = 900;
+  // Window Variables
+  GLFWwindow* window;
+  const int kWindowWidth = 1600;
+  const int kWindowHeight = 900;
 
-    Camera m_camera;
+  // Camera & Lighting
+  Camera camera;
+  glm::vec3 ambientLight;
 
-    // Colour Variables
-    glm::vec4 WHITE { 1, 1, 1, 1 };
-    glm::vec4 BLACK { 0, 0, 0, 1 };
+  // Colour Variables
+  glm::vec4 kWhite{1, 1, 1, 1};
+  glm::vec4 kBlack{0, 0, 0, 1};
 
-    // Shaders
-    aie::ShaderProgram m_simpleShader;
-    aie::ShaderProgram m_simplePhongShader;
-    aie::ShaderProgram m_normalPhongShader;
+  // Shaders
+  aie::ShaderProgram simpleShader;
+  aie::ShaderProgram simplePhongShader;
+  aie::ShaderProgram normalPhongShader;
 
-    // Meshes
-    Mesh m_quadMesh;
-    Mesh m_bunnyMesh;
-    Mesh m_soulspearMesh;
+  // Meshes
+  Mesh quadMesh;
+  Mesh bunnyMesh;
+  Mesh soulspearMesh;
 
-    // Textures
-    aie::Texture m_gridTexture;
-
-    // Projection & View
-    glm::mat4 m_projection;
-    glm::mat4 m_view;
-
-    glm::vec3 m_ambientLight;
+  // Projection & View
+  glm::mat4 projection;
+  glm::mat4 view;
 
 private:
-    void CreateGrid() const;
+  void CreateGrid() const;
 
-    glm::vec2 m_mousePosition;
-    glm::vec2 m_lastMousePosition;
+  glm::vec2 mousePosition;
+  glm::vec2 lastMousePosition;
 };

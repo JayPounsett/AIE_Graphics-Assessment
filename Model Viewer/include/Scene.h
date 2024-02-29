@@ -1,44 +1,51 @@
 #pragma once
-#include "glm/glm.hpp"
 #include <vector>
 
-struct Light {
-    glm::vec3 direction;
-    glm::vec3 colour;
+#include "glm/glm.hpp"
+
+struct Light
+{
+  glm::vec3 direction;
+  glm::vec3 colour;
 };
 
 class Camera;
 class Instance;
 class Light;
 
-class Scene {
+class Scene
+{
 protected:
-    Camera* m_camera;
-    glm::vec2 m_windowSize;
-    Light m_light;
+  Camera* camera;
+  glm::vec2 windowSize;
+  Light light;
 
-    glm::vec3 m_ambientLight;
-    std::vector<Instance*> m_instances;
+  glm::vec3 ambientLight;
+  std::vector<Instance*> instances;
 
-    glm::mat4 pv;
+  glm::mat4 pv;
 
 public:
-    Scene(Camera* camera, glm::vec2 windowSize, Light& light, glm::vec3 ambientLight)
-        : m_camera(camera)
-        , m_windowSize(windowSize)
-        , m_light(light)
-        , m_ambientLight(ambientLight) { }
-    ~Scene();
-    void AddInstance(Instance* instance);
+  Scene(
+    Camera* camera, glm::vec2 windowSize, Light& light, glm::vec3 ambientLight)
+    : camera(camera),
+      windowSize(windowSize),
+      light(light),
+      ambientLight(ambientLight)
+  {
+  }
+  ~Scene();
+  void AddInstance(Instance* instance);
 
-    Camera* GetCamera() { return m_camera; }
-    const glm::vec2 GetWindowSize() const {
-        return m_windowSize;
-    } // Check video at 3h52m on the consts
-    const glm::mat4 GetProjectionView() const { return pv; }
-    Light GetLight() { return m_light; }
-    const glm::vec3 GetAmbientLight() const { return m_ambientLight; }
+  Camera* GetCamera() { return camera; }
+  
+  // Check video at 3h52m on the consts
+  const glm::vec2 GetWindowSize() const { return windowSize; }
+  const glm::mat4 GetProjectionView() const { return pv; }
+  Light GetLight() const { return light; }
+  const glm::vec3 GetAmbientLight() const { return ambientLight; }
 
-    void Update(); // Good habit to pass in float dt, check into it in my own time as dt is elsewhere
-    void Draw();
+  void Update(); // Good habit to pass in float dt, check into it in my own time
+                 // as dt is elsewhere
+  void Draw();
 };
