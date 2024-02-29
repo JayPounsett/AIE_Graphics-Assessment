@@ -268,8 +268,11 @@ void Mesh::CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, const char* 
     this->Ka = Ka;
     this->Kd = Kd;
     this->Ks = Ks;
-    
+    //this->SpecularPower = specularPower;
+
     mapKd.load(filePath);
+
+    printf("Ka: %f\nKd: %f\nKs: %f\nSpecularPower: %f\n", this->Ka, this->Kd, this->Ks, this->SpecularPower);
 }
 
 void Mesh::CalculateTangents(Vertex* vertices, unsigned int vertexCount,
