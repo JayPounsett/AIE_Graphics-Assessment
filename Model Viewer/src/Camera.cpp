@@ -12,7 +12,7 @@ glm::mat4 Camera::GetViewMatrix() const
 
 glm::mat4 Camera::GetProjectionMatrix(float w, float h) const
 {
-  return glm::perspective(kFov_90, w / h, kNearClip, kFarClip);
+  return glm::perspective(kFOV_90, w / h, kNEAR_CLIP, kFAR_CLIP);
 }
 
 void Camera::Update(float dt, GLFWwindow* window)

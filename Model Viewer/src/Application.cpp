@@ -85,9 +85,10 @@ bool Application::Startup()
   glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
   glm::mat4 bunnyTransform = {
     0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
-  // 4th last digit will move on X-axis, lesson used 5 to move the spear beside the bunny
+  // 4th last digit will move on X-axis, lesson used 5 to move the spear beside
+  // the bunny
   glm::mat4 soulspearTransform = {
-    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, 0, 1}; 
+    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, 0, 1};
 
   // Setting Light & Ambient Colours
   Light light;

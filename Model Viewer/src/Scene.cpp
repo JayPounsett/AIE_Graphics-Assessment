@@ -23,6 +23,7 @@ void Scene::Update()
   ImGui::DragFloat3(
     "Sunlight Direction", &light.direction[0], 0.1f, -1.0f, 1.0f);
   ImGui::DragFloat3("Sunlight Colour", &light.colour[0], 0.1f, 0.0f, 2.0f);
+  //Add in non-interactive variables to show the coordinates of the camera (position, theta, phi)
   ImGui::End();
 }
 
