@@ -27,7 +27,7 @@ public:
         , Ka { 0.25, 0.25, 0.25 }
         , Kd { 0.25, 0.25, 0.25 }
         , Ks { 0.25, 0.25, 0.25 }
-        , SpecularPower(2.0f) { }
+        , SpecularPower(32.0f) { }
 
     virtual ~Mesh();
 
@@ -42,8 +42,6 @@ public:
     void LoadMaterial(const char* fileName);
     void CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks,
                         const char* filePath);
-    /*void CreateMaterial(glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, float SpecularPower,
-                        const char* filePath);*/
 
 protected:
     unsigned int m_triCount;
