@@ -106,7 +106,21 @@ bool Application::Startup()
   bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
   bunnyMesh.LoadMaterial("./Models/bunny.mtl");
 
+  //// Create instances
+  // std::unique_ptr<Instance> quadInstance =
+  //   std::make_unique<Instance>(quadTransform, &quadMesh, &simplePhongShader);
+
+  // std::unique_ptr<Instance> bunnyInstance =
+  //   std::make_unique<Instance>(bunnyTransform, &bunnyMesh,
+  //   &simplePhongShader);
+
+  // std::unique_ptr<Instance> soulspearInstance = std::make_unique<Instance>(
+  //   soulspearTransform, &soulspearMesh, &normalPhongShader);
+
   // Add Instances to Scene
+  // activeScene->AddInstance(std::move(quadInstance));
+  // activeScene->AddInstance(std::move(bunnyInstance));
+  // activeScene->AddInstance(std::move(soulspearInstance));
   activeScene->AddInstance(
     new Instance(quadTransform, &quadMesh, &simplePhongShader));
   activeScene->AddInstance(
