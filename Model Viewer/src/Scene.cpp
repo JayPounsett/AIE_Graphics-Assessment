@@ -16,12 +16,19 @@ Scene::~Scene()
   //   delete (*it->get());
   // }
 }
-
-void Scene::AddInstance(Instance* instance) { instances.push_back(instance); }
 // void Scene::AddInstance(std::unique_ptr<Instance> instance)
 //{
 //   instances.push_back(instance);
 // }
+void Scene::AddInstance(Instance* instance) { instances.push_back(instance); }
+void Scene::RemoveInstance(Instance* instance)
+{
+  auto it = std::find(instances.begin(), instances.end(), instance);
+  if (it != instances.end()) {
+    instances.erase(it);
+  }
+};
+
 
 void Scene::Update()
 {
@@ -41,10 +48,12 @@ void Scene::Update()
 void Scene::Draw()
 {
   for (auto it = instances.begin(); it != instances.end(); it++) {
-    (*it)->Draw(this);
-    // for (auto it = instances.begin(); it != instances.end(); it++) {
-    //   if ((*it)->CheckDoesInstanceExist()) {
-    //     (*it)->Draw(this);
-    // }
+    if ((*it)->CheckDoesInstanceExist()) {
+      (*it)->Draw(this);
+
+      // for (auto it = instances.begin(); it != instances.end(); it++) {
+      //   if ((*it)->CheckDoesInstanceExist()) {
+      //     (*it)->Draw(this);
+    }
   }
 }

@@ -106,7 +106,14 @@ bool Application::Startup()
   bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
   bunnyMesh.LoadMaterial("./Models/bunny.mtl");
 
-  //// Create instances
+  // Create instances
+  Instance* quadInstance =
+    new Instance(quadTransform, &quadMesh, &simplePhongShader);
+  Instance* bunnyInstance =
+    new Instance(bunnyTransform, &bunnyMesh, &simplePhongShader);
+  Instance* soulspearInstance =
+    new Instance(soulspearTransform, &soulspearMesh, &normalPhongShader);
+
   // std::unique_ptr<Instance> quadInstance =
   //   std::make_unique<Instance>(quadTransform, &quadMesh, &simplePhongShader);
 
@@ -118,15 +125,17 @@ bool Application::Startup()
   //   soulspearTransform, &soulspearMesh, &normalPhongShader);
 
   // Add Instances to Scene
+  activeScene->AddInstance(quadInstance);
+  activeScene->AddInstance(bunnyInstance);
+  activeScene->AddInstance(soulspearInstance);
+
   // activeScene->AddInstance(std::move(quadInstance));
   // activeScene->AddInstance(std::move(bunnyInstance));
   // activeScene->AddInstance(std::move(soulspearInstance));
-  activeScene->AddInstance(
-    new Instance(quadTransform, &quadMesh, &simplePhongShader));
-  activeScene->AddInstance(
-    new Instance(bunnyTransform, &bunnyMesh, &simplePhongShader));
-  activeScene->AddInstance(
-    new Instance(soulspearTransform, &soulspearMesh, &normalPhongShader));
+
+  activeScene->RemoveInstance(bunnyInstance);
+
+  activeScene->AddInstance(bunnyInstance); // Doesn't work as intended. Bunny is re-added yet is black and has specular.
 
   return true;
 }

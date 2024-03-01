@@ -54,6 +54,11 @@ protected:
   glm::vec4 kWhite{1, 1, 1, 1};
   glm::vec4 kBlack{0, 0, 0, 1};
 
+  // Instances
+  Instance* quadInstance;
+  Instance* bunnyInstance;
+  Instance* soulspearInstance;
+
   // Shaders
   aie::ShaderProgram simpleShader;
   aie::ShaderProgram simplePhongShader;

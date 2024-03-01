@@ -28,6 +28,8 @@ public:
   void AddInstance(Instance* instance);
   //void AddInstance(std::unique_ptr<Instance> instance);
 
+  void RemoveInstance(Instance* instance);
+
   Camera* GetCamera() { return camera; }
 
   // Check video at 3h52m on the consts
