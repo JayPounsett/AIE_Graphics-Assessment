@@ -8,27 +8,17 @@
 
 Scene::~Scene()
 {
-  for (auto it = instances.begin(); it > instances.end();) {
+  for (auto it = instances.begin(); it != instances.end(); it++) {
     delete *it;
   }
 
-  // for (auto it = instances.begin(); it > instances.end();) {
-  //   delete (*it->get());
-  // }
-}
-// void Scene::AddInstance(std::unique_ptr<Instance> instance)
-//{
-//   instances.push_back(instance);
-// }
-void Scene::AddInstance(Instance* instance) { instances.push_back(instance); }
-void Scene::RemoveInstance(Instance* instance)
-{
-  auto it = std::find(instances.begin(), instances.end(), instance);
-  if (it != instances.end()) {
-    instances.erase(it);
+  for (auto it = pointLights.begin(); it != pointLights.end(); it++) {
+    delete *it;
   }
-};
+}
+void Scene::AddInstance(Instance* instance) { instances.push_back(instance); }
 
+void Scene::AddLight(Light* light) { pointLights.push_back(light); }
 
 void Scene::Update()
 {
@@ -38,8 +28,11 @@ void Scene::Update()
   aie::ImGui_NewFrame();
   ImGui::Begin("Light Settings");
   ImGui::DragFloat3(
-    "Sunlight Direction", &light.direction[0], 0.1f, -1.0f, 1.0f);
-  ImGui::DragFloat3("Sunlight Colour", &light.colour[0], 0.1f, 0.0f, 2.0f);
+    "Sunlight Direction", &sunLight.direction[0], 0.1f, -1.0f, 1.0f);
+  ImGui::DragFloat3("Sunlight Colour", &sunLight.colour[0], 0.1f, 0.0f, 2.0f);
+  
+  //ImGui::DragFloat3("Point Light 1", &pointLights[0]->colour.r, 0.1f, 0.0f, 1.0f);
+  
   // Add in non-interactive variables to show the coordinates of the camera
   // (position, theta, phi)
   ImGui::End();
@@ -47,13 +40,17 @@ void Scene::Update()
 
 void Scene::Draw()
 {
-  for (auto it = instances.begin(); it != instances.end(); it++) {
-    if ((*it)->CheckDoesInstanceExist()) {
-      (*it)->Draw(this);
+  pv = camera->GetProjectionMatrix(windowSize.x, windowSize.y) *
+       camera->GetViewMatrix();
 
-      // for (auto it = instances.begin(); it != instances.end(); it++) {
-      //   if ((*it)->CheckDoesInstanceExist()) {
-      //     (*it)->Draw(this);
-    }
+  for (int i = 0; i < pointLights.size(); i++) {
+    pointLightPositions[i] = pointLights[i]->direction;
+    pointLightColours[i] = pointLights[i]->colour;
   }
+
+  for (auto it = instances.begin(); it != instances.end(); it++) {
+    (*it)->Draw(this);
+  }
+
+  ImGui::Render();
 }

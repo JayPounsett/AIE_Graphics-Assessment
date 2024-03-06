@@ -21,6 +21,13 @@ void Instance::Draw(Scene* scene)
   // Bind camera position
   shader->bindUniform("CameraPosition", scene->GetCamera()->GetPosition());
 
+  // Bind our point lights
+  int numLights = scene->GetNumberLights();
+  shader->bindUniform("numLights", numLights);
+  shader->bindUniform(
+    "PointLightPosition", numLights, scene->GetPointPositions());
+  shader->bindUniform("PointLightColour", numLights, scene->GetPointColours());
+
   // Bind transform
   auto pvm = scene->GetProjectionView() * transform;
   shader->bindUniform("ProjectionViewModel", pvm);

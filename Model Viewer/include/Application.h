@@ -62,12 +62,14 @@ protected:
   // Shaders
   aie::ShaderProgram simpleShader;
   aie::ShaderProgram simplePhongShader;
+  aie::ShaderProgram phongNoTextureShader;
   aie::ShaderProgram normalPhongShader;
 
   // Meshes
   Mesh quadMesh;
   Mesh bunnyMesh;
   Mesh soulspearMesh;
+  Mesh lucyMesh;
 
   // Projection & View
   glm::mat4 projection;

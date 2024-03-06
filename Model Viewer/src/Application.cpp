@@ -52,7 +52,7 @@ bool Application::Startup()
     glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
 
   // Load shaders
-  // Shader List: simpleShader, phongShader, normalPhongShader
+  // Shader List: simpleShader, phongShader, phongNoTexture, normalPhongShader
   simpleShader.loadShader(
     aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
   simpleShader.loadShader(
@@ -62,6 +62,12 @@ bool Application::Startup()
     aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongShader.vert");
   simplePhongShader.loadShader(
     aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/phongShader.frag");
+
+  phongNoTextureShader.loadShader(
+    aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongNoTextureShader.vert");
+  phongNoTextureShader.loadShader(
+    aie::eShaderStage::FRAGMENT,
+    "./Shaders/Fragment/phongNoTextureShader.frag");
 
   normalPhongShader.loadShader(
     aie::eShaderStage::VERTEX, "./Shaders/Vertex/normalPhongShader.vert");
@@ -78,6 +84,11 @@ bool Application::Startup()
     return false;
   }
 
+  if (phongNoTextureShader.link() == false) {
+    printf("Shader Error: %s\n", phongNoTextureShader.getLastError());
+    return false;
+  }
+
   if (normalPhongShader.link() == false) {
     printf("Shader Error: %s\n", normalPhongShader.getLastError());
     return false;
@@ -89,59 +100,59 @@ bool Application::Startup()
 
   glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
   glm::mat4 bunnyTransform = {
+    0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 3, 0, -3, 1};
+
+  glm::mat4 lucyTransform = {
     0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
+
   // 4th last digit will move on X-axis, lesson used 5 to move the spear beside
   // the bunny
   glm::mat4 soulspearTransform = {
-    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, 0, 1};
+    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 
-  // Setting Light & Ambient Colours
-  Light light;
-
-  light.direction = glm::normalize(glm::vec3(-1));
-  light.colour = {1, 1, 1};
+  // Setting up sun light
+  Light sunLight(glm::vec3(-1), glm::vec3(1, 1, 1), 1);
 
   // Create Scene
   activeScene = new Scene(
-    &camera, glm::vec2(kWindowWidth, kWindowHeight), light, ambientLight);
+    &camera, glm::vec2(kWindowWidth, kWindowHeight), sunLight, ambientLight);
+  activeScene->AddLight(new Light(
+    glm::vec3(0, 3, 5),
+    glm::vec3(1, 0, 0),
+    25)); // Red, pointed at front model
+  activeScene->AddLight(new Light(
+    glm::vec3(0, 3, -5),
+    glm::vec3(1, 1, 1),
+    25)); // White, pointed at back of model
+  activeScene->AddLight(new Light(
+    glm::vec3(-5, 3, 0), glm::vec3(0, 1, 0), 25)); // Green, pointed from left
+  activeScene->AddLight(new Light(
+    glm::vec3(5, 3, 0), glm::vec3(0, 0, 1), 25)); // Blue, pointed from right
+
 
   // Load Models
   soulspearMesh.InitialiseFromFile("./Models/soulspear.obj");
   soulspearMesh.LoadMaterial("./Models/soulspear.mtl");
   bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
   bunnyMesh.LoadMaterial("./Models/bunny.mtl");
+  lucyMesh.InitialiseFromFile("./Models/Lucy.obj");
+  lucyMesh.LoadMaterial("./Models/Lucy.mtl");
 
   // Create instances
   Instance* quadInstance =
     new Instance(quadTransform, &quadMesh, &simplePhongShader);
-  Instance* bunnyInstance =
-    new Instance(bunnyTransform, &bunnyMesh, &simplePhongShader);
   Instance* soulspearInstance =
     new Instance(soulspearTransform, &soulspearMesh, &normalPhongShader);
-
-  // std::unique_ptr<Instance> quadInstance =
-  //   std::make_unique<Instance>(quadTransform, &quadMesh, &simplePhongShader);
-
-  // std::unique_ptr<Instance> bunnyInstance =
-  //   std::make_unique<Instance>(bunnyTransform, &bunnyMesh,
-  //   &simplePhongShader);
-
-  // std::unique_ptr<Instance> soulspearInstance = std::make_unique<Instance>(
-  //   soulspearTransform, &soulspearMesh, &normalPhongShader);
+  Instance* bunnyInstance =
+    new Instance(bunnyTransform, &bunnyMesh, &phongNoTextureShader);
+  Instance* lucyInstance =
+    new Instance(lucyTransform, &lucyMesh, &phongNoTextureShader);
 
   // Add Instances to Scene
   activeScene->AddInstance(quadInstance);
-  activeScene->AddInstance(bunnyInstance);
-  activeScene->AddInstance(soulspearInstance);
-
-  // activeScene->AddInstance(std::move(quadInstance));
-  // activeScene->AddInstance(std::move(bunnyInstance));
-  // activeScene->AddInstance(std::move(soulspearInstance));
-
-  // activeScene->RemoveInstance(bunnyInstance);
-
-  // activeScene->AddInstance(bunnyInstance); // Doesn't work as intended. Bunny
-  // is re-added yet is black and has specular.
+  // activeScene->AddInstance(soulspearInstance);
+  // activeScene->AddInstance(bunnyInstance);
+  activeScene->AddInstance(lucyInstance);
 
   return true;
 }
@@ -198,7 +209,7 @@ void Application::Draw()
 
   activeScene->Draw();
 
-  ImGui::Render(); // Draw this last to render over the top
+  // ImGui::Render(); // Draw this last to render over the top
 
   glfwSwapBuffers(window); // Draw the front, then the back, and alternate.
   glfwPollEvents(); // Windows related stuff - moving the window, etc.

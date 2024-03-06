@@ -3,13 +3,12 @@
 
 in vec4 vPosition;
 in vec3 vNormal;
-in vec2 vTexCoord;
 
 uniform vec3 CameraPosition;
 
 uniform vec3 LightColour;
-uniform vec3 LightDirection;
 uniform vec3 AmbientColour;
+uniform vec3 LightDirection;
 
 const int MAX_LIGHTS = 4;
 uniform int numLights;
@@ -20,8 +19,6 @@ uniform vec3 Ka; // Ambient material colour
 uniform vec3 Kd; // Diffuse material colour 
 uniform vec3 Ks; // Specular material colour 
 uniform float SpecularPower; // Tightness of specular highlights
-
-uniform sampler2D diffuseTex;
 
 out vec4 FragColour;
 
@@ -47,11 +44,9 @@ void main(){
 
 	// Calculate lambert term (negate light direction)
 	vec3 diffuseTotal = GetDiffuse(L, LightColour, N);
-	//float lambertTerm = max(0,min(1, dot(N, L)));
 
 	// Calclate specular term from directional lights
 	vec3 specularTotal = GetSpecular(L, LightColour, N, V);
-	//float specularTerm = pow( max( 0, dot( L, V ) ), SpecularPower );
 
 	// Calculate light from point lights
 	for(int i = 0; i < numLights; i++)
@@ -66,13 +61,9 @@ void main(){
 		specularTotal += GetSpecular(direction, colour, N, V);
 	}
 
-	vec3 textureDiffuse = texture(diffuseTex, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
-
 	vec3 ambient  = AmbientColour * Ka;
-	vec3 diffuse  = diffuseTotal * Kd * textureDiffuse;	
-	//vec3 diffuse  = lambertTerm * LightColour * Kd * textureDiffuse;	
+	vec3 diffuse  = diffuseTotal * Kd;	
 	vec3 specular = specularTotal * Ks;
-	//vec3 specular = specularTerm * LightColour * Ks;
 
 	FragColour = vec4( ambient + diffuse + specular, 1 );
 }

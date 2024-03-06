@@ -58,11 +58,15 @@
     <None Include="data\Models\Lucy.mtl" />
     <None Include="data\Models\soulspear.mtl" />
     <None Include="data\Shaders\Fragment\normalPhongShader.frag" />
+    <None Include="data\Shaders\Fragment\phongNoTextureShader.frag" />
     <None Include="data\Shaders\Fragment\phongShader.frag" />
     <None Include="data\Shaders\Fragment\simpleShader.frag" />
+    <None Include="data\Shaders\Fragment\toonShader.frag" />
     <None Include="data\Shaders\Vertex\normalPhongShader.vert" />
+    <None Include="data\Shaders\Vertex\phongNoTextureShader.vert" />
     <None Include="data\Shaders\Vertex\phongShader.vert" />
     <None Include="data\Shaders\Vertex\simpleShader.vert" />
+    <None Include="data\Shaders\Vertex\toonShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\Models\soulspear_diffuse.tga" />

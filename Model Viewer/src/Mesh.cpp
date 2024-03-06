@@ -267,20 +267,20 @@ void Mesh::LoadMaterial(const char* fileName)
       std::string mapFileName;
       ss >> header >> mapFileName;
       mapKd.load((directory + mapFileName).c_str());
-      printf(("Diffuse Texture Map:" + directory + mapFileName).c_str());
-      printf("\n");
+      //printf(("Diffuse Texture Map:" + directory + mapFileName).c_str());
+      //printf("\n");
     } else if (line.find("map_Ks") == 0) {
       std::string mapFileName;
       ss >> header >> mapFileName;
       mapKs.load((directory + mapFileName).c_str());
-      printf(("Specular Texture Map:" + directory + mapFileName).c_str());
-      printf("\n");
+      //printf(("Specular Texture Map:" + directory + mapFileName).c_str());
+      //printf("\n");
     } else if (line.find("bump") == 0) {
       std::string mapFileName;
       ss >> header >> mapFileName;
       mapBump.load((directory + mapFileName).c_str());
-      printf(("Bump Texture Map:" + directory + mapFileName).c_str());
-      printf("\n");
+      //printf(("Bump Texture Map:" + directory + mapFileName).c_str());
+      //printf("\n");
     }
   }
 }
