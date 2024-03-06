@@ -52,7 +52,7 @@ bool Application::Startup()
     glm::perspective(glm::pi<float>() * 0.25f, 16 / 9.f, 0.1f, 1000.f);
 
   // Load shaders
-  // Shader List: simpleShader, phongNormal, phongTextured
+  // Shader List: simpleShader, phongShader, normalPhongShader
   simpleShader.loadShader(
     aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
   simpleShader.loadShader(
@@ -67,6 +67,11 @@ bool Application::Startup()
     aie::eShaderStage::VERTEX, "./Shaders/Vertex/normalPhongShader.vert");
   normalPhongShader.loadShader(
     aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/normalPhongShader.frag");
+
+  if (simpleShader.link() == false) {
+    printf("Shader Error: %s\n", simpleShader.getLastError());
+    return false;
+  }
 
   if (simplePhongShader.link() == false) {
     printf("Shader Error: %s\n", simplePhongShader.getLastError());
@@ -133,9 +138,10 @@ bool Application::Startup()
   // activeScene->AddInstance(std::move(bunnyInstance));
   // activeScene->AddInstance(std::move(soulspearInstance));
 
-  activeScene->RemoveInstance(bunnyInstance);
+  // activeScene->RemoveInstance(bunnyInstance);
 
-  activeScene->AddInstance(bunnyInstance); // Doesn't work as intended. Bunny is re-added yet is black and has specular.
+  // activeScene->AddInstance(bunnyInstance); // Doesn't work as intended. Bunny
+  // is re-added yet is black and has specular.
 
   return true;
 }

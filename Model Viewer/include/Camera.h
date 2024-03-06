@@ -8,7 +8,7 @@
 class Camera
 {
 public:
-  //Camera() : Camera(0, 0, {-10, 3, 0}, 0.07f) {} // Values given in lessons
+  // Camera() : Camera(0, 0, {-10, 3, 0}, 0.07f) {} // Values given in lessons
   Camera() : Camera(-90, -20, {0, 6, 12}, 0.07f) {}
   Camera(float theta, float phi, glm::vec3 position, float ts)
     : theta(theta), phi(phi), position(position), turnSpeed(ts)

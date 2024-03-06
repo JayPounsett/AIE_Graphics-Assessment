@@ -13,8 +13,7 @@ class ShaderProgram;
 class Instance
 {
 public:
-  Instance(
-    glm::mat4 transform, Mesh* mesh, aie::ShaderProgram* shader)
+  Instance(glm::mat4 transform, Mesh* mesh, aie::ShaderProgram* shader)
     : transform(transform), mesh(mesh), shader(shader)
   {
     this->SetDoesInstanceExist(true);

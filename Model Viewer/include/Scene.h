@@ -1,6 +1,7 @@
 #pragma once
-#include <vector>
 #include <memory>
+#include <vector>
+
 #include "glm/glm.hpp"
 
 struct Light
@@ -26,7 +27,7 @@ public:
   }
   ~Scene();
   void AddInstance(Instance* instance);
-  //void AddInstance(std::unique_ptr<Instance> instance);
+  // void AddInstance(std::unique_ptr<Instance> instance);
 
   void RemoveInstance(Instance* instance);
 
@@ -49,7 +50,7 @@ protected:
 
   glm::vec3 ambientLight;
   std::vector<Instance*> instances;
-  //std::vector<std::unique_ptr<Instance>> instances;
+  // std::vector<std::unique_ptr<Instance>> instances;
 
   glm::mat4 pv;
 };
