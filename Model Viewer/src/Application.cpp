@@ -12,7 +12,8 @@ Application* Application::instance;
 
 bool Application::Startup()
 {
-  if (glfwInit() == false) {
+  if (glfwInit() == false)
+  {
     return false;
   }
 
@@ -20,7 +21,8 @@ bool Application::Startup()
   window = glfwCreateWindow(
     kWindowWidth, kWindowHeight, "OpenGL Class Project", nullptr, nullptr);
 
-  if (window == nullptr) {
+  if (window == nullptr)
+  {
     glfwTerminate();
     return false;
   }
@@ -28,7 +30,8 @@ bool Application::Startup()
   // Sets specified window as the one that will be used
   glfwMakeContextCurrent(window);
 
-  if (!gladLoadGL()) {
+  if (!gladLoadGL())
+  {
     glfwDestroyWindow(window);
     glfwTerminate();
     return false;
@@ -74,22 +77,26 @@ bool Application::Startup()
   normalPhongShader.loadShader(
     aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/normalPhongShader.frag");
 
-  if (simpleShader.link() == false) {
+  if (simpleShader.link() == false)
+  {
     printf("Shader Error: %s\n", simpleShader.getLastError());
     return false;
   }
 
-  if (simplePhongShader.link() == false) {
+  if (simplePhongShader.link() == false)
+  {
     printf("Shader Error: %s\n", simplePhongShader.getLastError());
     return false;
   }
 
-  if (phongNoTextureShader.link() == false) {
+  if (phongNoTextureShader.link() == false)
+  {
     printf("Shader Error: %s\n", phongNoTextureShader.getLastError());
     return false;
   }
 
-  if (normalPhongShader.link() == false) {
+  if (normalPhongShader.link() == false)
+  {
     printf("Shader Error: %s\n", normalPhongShader.getLastError());
     return false;
   }
@@ -100,7 +107,7 @@ bool Application::Startup()
 
   glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
   glm::mat4 bunnyTransform = {
-    0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 3, 0, -3, 1};
+    0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
 
   glm::mat4 lucyTransform = {
     0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
@@ -119,15 +126,15 @@ bool Application::Startup()
   activeScene->AddLight(new Light(
     glm::vec3(0, 3, 5),
     glm::vec3(1, 0, 0),
-    25)); // Red, pointed at front model
+    50)); // Red, pointed at front model
   activeScene->AddLight(new Light(
     glm::vec3(0, 3, -5),
     glm::vec3(1, 1, 1),
-    25)); // White, pointed at back of model
+    50)); // White, pointed at back of model
   activeScene->AddLight(new Light(
-    glm::vec3(-5, 3, 0), glm::vec3(0, 1, 0), 25)); // Green, pointed from left
+    glm::vec3(-5, 3, 0), glm::vec3(0, 1, 0), 50)); // Green, pointed from left
   activeScene->AddLight(new Light(
-    glm::vec3(5, 3, 0), glm::vec3(0, 0, 1), 25)); // Blue, pointed from right
+    glm::vec3(5, 3, 0), glm::vec3(0, 0, 1), 50)); // Blue, pointed from right
 
 
   // Load Models
@@ -150,9 +157,9 @@ bool Application::Startup()
 
   // Add Instances to Scene
   activeScene->AddInstance(quadInstance);
-  // activeScene->AddInstance(soulspearInstance);
-  // activeScene->AddInstance(bunnyInstance);
-  activeScene->AddInstance(lucyInstance);
+  //activeScene->AddInstance(soulspearInstance);
+  activeScene->AddInstance(bunnyInstance);
+  // activeScene->AddInstance(lucyInstance);
 
   return true;
 }
@@ -177,7 +184,8 @@ bool Application::Update()
   // Close window on ESC or pressing X in top right
   if (
     glfwWindowShouldClose(window) == true ||
-    glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
+    glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+  {
     return false;
   }
 
@@ -232,7 +240,8 @@ void Application::Shutdown()
 /// </summary>
 void Application::CreateGrid() const
 {
-  for (int i = 0; i < 21; i++) {
+  for (int i = 0; i < 21; i++)
+  {
     aie::Gizmos::addLine(
       glm::vec3(-10 + i, 0, 10),
       glm::vec3(-10 + i, 0, -10),
