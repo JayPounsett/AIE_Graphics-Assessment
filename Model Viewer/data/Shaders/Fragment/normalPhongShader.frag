@@ -26,6 +26,7 @@ uniform float SpecularPower; // Tightness of specular highlights
 uniform sampler2D diffuseTex;
 uniform sampler2D specularTex;
 uniform sampler2D normalTex; 
+uniform samplerCube skyboxTex;
 
 out vec4 FragColour;
 
@@ -39,6 +40,10 @@ vec3 GetSpecular(vec3 direction, vec3 colour, vec3 normal, vec3 view)
 	vec3 R = reflect(direction, normal);
 	float specularTerm = pow( max( 0, dot( R, view ) ), SpecularPower );
 	return specularTerm * colour;
+}
+
+float SchlickApprox(vec3 I, vec3 normal){
+	return pow(1.f - (dot(I, normal)), 5.f);
 }
 
 void main()
@@ -75,12 +80,15 @@ void main()
 		specularTotal += GetSpecular(direction, colour, N, V);
 	}
 	
-	vec3 textureDiffuse  = texture(diffuseTex, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
+	vec3 reflectionDirection = reflect(V, N);
+
+	vec3 textureDiffuse = texture(diffuseTex, vTexCoord).rgb;  // Only interested in RGB, don't need to worry about Alpha
 	vec3 textureSpecular = texture(specularTex, vTexCoord).rgb;
+	vec3 reflectionColour = texture(skyboxTex, reflectionDirection).rgb * SchlickApprox(V, N);
 	
-	vec3 ambient  = AmbientColour * Ka;
+	vec3 ambient = AmbientColour * Ka;
 	vec3 diffuse = diffuseTotal * Kd * textureDiffuse;
 	vec3 specular = specularTotal * Ks * textureSpecular;
 
-	FragColour = vec4( ambient + diffuse + specular, 1 );
+	FragColour = vec4( ambient + diffuse + specular + reflectionColour, 1 );
 }

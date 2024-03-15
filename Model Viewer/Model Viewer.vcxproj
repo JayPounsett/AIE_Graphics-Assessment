@@ -24,6 +24,7 @@
   <ItemGroup>
     <ClCompile Include="..\dep\imgui\imgui.cpp" />
     <ClCompile Include="..\dep\imgui\imgui_draw.cpp" />
+    <ClCompile Include="src\Skybox.cpp" />
     <ClCompile Include="src\Scene.cpp" />
     <ClCompile Include="src\Instance.cpp" />
     <ClCompile Include="src\Camera.cpp" />
@@ -50,6 +51,7 @@
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\Instance.h" />
     <ClInclude Include="include\Scene.h" />
+    <ClInclude Include="include\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\Models\Buddha.mtl" />

@@ -44,9 +44,9 @@ private:
   float phiR = 0.f;
 
   float turnSpeed;
-  const float kFOV_90 = glm::pi<float>() * 0.25f;
-  const float kNEAR_CLIP = 0.01f;
-  const float kFAR_CLIP = 1000.f;
+  const float kFov_90 = glm::pi<float>() * 0.25f;
+  const float kNear_Clip = 0.01f;
+  const float kFar_Clip = 1000.f;
 
 
   glm::vec3 forward = {0, 0, 0};

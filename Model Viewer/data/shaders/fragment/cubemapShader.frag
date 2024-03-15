@@ -1,3 +1,4 @@
+// Cubemap Shader
 #version 330 core
 
 out vec4 FragColour;
@@ -8,5 +9,5 @@ uniform samplerCube skybox;
 
 void main()
 {    
-    FragColor = texture(skybox, TexCoord);
+    FragColour = texture(skybox, TexCoord);
 }

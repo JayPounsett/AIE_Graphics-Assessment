@@ -27,30 +27,33 @@ public:
     Camera* camera,
     glm::vec2 windowSize,
     Light& sunLight,
-    glm::vec3 ambientLight)
-    : camera(camera),
-      windowSize(windowSize),
-      sunLight(sunLight),
-      ambientLight(ambientLight)
+    glm::vec3 ambientLight,
+    unsigned int skyboxTextureID)
+    : camera{camera},
+      windowSize{windowSize},
+      sunLight{sunLight},
+      ambientLight{ambientLight}
   {
   }
 
   ~Scene();
   void AddInstance(Instance* instance);
   void AddLight(Light* light);
-  // void RemoveInstance(Instance* instance);
 
   Camera* GetCamera() { return camera; }
 
-  // Check video at 3h52m on the consts
+    // Check video at 3h52m on the consts
   const glm::vec2 GetWindowSize() const { return windowSize; }
   const glm::mat4 GetProjectionView() const { return pv; }
+  const glm::mat4 GetProjectionMatrix() const;
+  const glm::mat4 GetViewMatrix() const;
   Light GetLight() const { return sunLight; }
   glm::vec3 GetAmbientLight() { return ambientLight; }
 
   int GetNumberLights() { return (int)pointLights.size(); }
   glm::vec3* GetPointPositions() { return &pointLightPositions[0]; }
   glm::vec3* GetPointColours() { return &pointLightColours[0]; }
+  unsigned int GetSkyboxTextureID() const { return skyboxTextureID; }
 
   void Update(); // Good habit to pass in float dt, check into it in my own time
                  // as dt is elsewhere
@@ -69,6 +72,8 @@ protected:
   glm::vec3 pointLightColours[MAX_LIGHTS];
 
   std::vector<Instance*> instances;
+
+  unsigned int skyboxTextureID;
 
   glm::mat4 pv;
 };

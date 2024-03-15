@@ -33,6 +33,11 @@ void Instance::Draw(Scene* scene)
   shader->bindUniform("ProjectionViewModel", pvm);
   shader->bindUniform("ModelMatrix", transform);
 
+  glActiveTexture(GL_TEXTURE4);
+  glBindTexture(GL_TEXTURE_CUBE_MAP, scene->GetSkyboxTextureID());
+  auto location = glGetUniformLocation(shader->getHandle(), "skyboxTex");
+  glUniform1i(location, 4);
+
   mesh->ApplyMaterial(shader);
 
   // Draw

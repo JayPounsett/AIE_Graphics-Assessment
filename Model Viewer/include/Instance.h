@@ -6,7 +6,8 @@ class Light;
 class Mesh;
 class Scene;
 
-namespace aie {
+namespace aie
+{
 class ShaderProgram;
 };
 

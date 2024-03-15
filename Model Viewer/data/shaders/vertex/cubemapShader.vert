@@ -1,7 +1,7 @@
-// Phong vertex shader (no texture)
+// Cubemap Shader
 #version 460
 
-layout( location = 0) in vec4 Position;
+layout( location = 0) in vec3 Position;
 
 out vec3 TexCoord;
 
@@ -10,5 +10,6 @@ uniform mat4 View;
 
 void main(){
 	TexCoord = Position;
-	gl_Position = Projection * View * Position;
+	vec4 pos = Projection * View * vec4(Position, 1.0f);
+	gl_Position = pos.xyww;
 }

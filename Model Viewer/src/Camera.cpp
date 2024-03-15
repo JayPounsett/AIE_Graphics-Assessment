@@ -12,7 +12,7 @@ glm::mat4 Camera::GetViewMatrix() const
 
 glm::mat4 Camera::GetProjectionMatrix(float w, float h) const
 {
-  return glm::perspective(kFOV_90, w / h, kNEAR_CLIP, kFAR_CLIP);
+  return glm::perspective(kFov_90, w / h, kNear_Clip, kFar_Clip);
 }
 
 void Camera::Update(float dt, GLFWwindow* window)
@@ -24,34 +24,41 @@ void Camera::Update(float dt, GLFWwindow* window)
   right = GetRight();
   up = GetUp();
 
-  if (glfwGetKey(window, GLFW_KEY_W)) {
+  if (glfwGetKey(window, GLFW_KEY_W))
+  {
     position += forward * dt;
   }
 
-  if (glfwGetKey(window, GLFW_KEY_S)) {
+  if (glfwGetKey(window, GLFW_KEY_S))
+  {
     position -= forward * dt;
   }
 
-  if (glfwGetKey(window, GLFW_KEY_A)) {
+  if (glfwGetKey(window, GLFW_KEY_A))
+  {
     position -= right * dt;
   }
 
-  if (glfwGetKey(window, GLFW_KEY_D)) {
+  if (glfwGetKey(window, GLFW_KEY_D))
+  {
     position += right * dt;
   }
 
-  if (glfwGetKey(window, GLFW_KEY_Z)) {
+  if (glfwGetKey(window, GLFW_KEY_Z))
+  {
     position += up * dt;
   }
 
-  if (glfwGetKey(window, GLFW_KEY_X)) {
+  if (glfwGetKey(window, GLFW_KEY_X))
+  {
     position -= up * dt;
   }
 
   glm::vec2 mouseDelta = Application::get()->GetMouseDelta();
 
   // if the right button is down, increment theta and phi
-  if (glfwGetMouseButton(window, 1)) {
+  if (glfwGetMouseButton(window, 1))
+  {
     theta += turnSpeed * mouseDelta.x;
     phi -= turnSpeed * mouseDelta.y;
   }

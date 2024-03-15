@@ -5,7 +5,7 @@
 #include "Mesh.h"
 #include "Scene.h"
 #include "Shader.h"
-#include "Skyubox.h"
+#include "Skybox.h"
 #include "Texture.h"
 #include "glad.h"
 #include "glm/ext.hpp"
@@ -65,6 +65,7 @@ protected:
   aie::ShaderProgram simplePhongShader;
   aie::ShaderProgram phongNoTextureShader;
   aie::ShaderProgram normalPhongShader;
+  aie::ShaderProgram skyboxShader;
 
   // Meshes
   Mesh quadMesh;
@@ -72,6 +73,8 @@ protected:
   Mesh soulspearMesh;
   Mesh lucyMesh;
   Skybox skybox;
+
+  unsigned int cubemapTexture;
 
   // Projection & View
   glm::mat4 projection;

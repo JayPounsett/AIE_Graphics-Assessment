@@ -77,6 +77,12 @@ bool Application::Startup()
   normalPhongShader.loadShader(
     aie::eShaderStage::FRAGMENT, "./shaders/fragment/normalPhongShader.frag");
 
+  skyboxShader.loadShader(
+    aie::eShaderStage::VERTEX, "./shaders/vertex/cubemapShader.vert");
+  skyboxShader.loadShader(
+    aie::eShaderStage::FRAGMENT, "./shaders/fragment/cubemapShader.frag");
+
+#pragma region Linking Shaders
   if (simpleShader.link() == false)
   {
     printf("Shader Error: %s\n", simpleShader.getLastError());
@@ -101,64 +107,86 @@ bool Application::Startup()
     return false;
   }
 
-  quadMesh.InitialiseQuad();
-  quadMesh.CreateMaterial(
-    glm::vec3(1), glm::vec3(1), glm::vec3(1), "./textures/numbered_grid.tga");
+  if (skyboxShader.link() == false)
+  {
+    printf("Shader Error: %s\n", skyboxShader.getLastError());
+    return false;
+  }
+#pragma endregion
 
-  glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
-  glm::mat4 bunnyTransform = {
-    0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
+  // quadMesh.InitialiseQuad();
+  // quadMesh.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1), "./textures/numbered_grid.tga");
 
-  glm::mat4 lucyTransform = {
-    0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
+  //glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
+  //glm::mat4 bunnyTransform = {0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
+  //glm::mat4 lucyTransform = {0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 1};
 
   // 4th last digit will move on X-axis, lesson used 5 to move the spear beside
   // the bunny
   glm::mat4 soulspearTransform = {
     1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 
+  // Setting up skybox
+  std::vector<std::string> faces{
+    "./textures/skybox/front.jpg",
+    "./textures/skybox/back.jpg",
+    "./textures/skybox/top.jpg",
+    "./textures/skybox/bottom.jpg",
+    "./textures/skybox/right.jpg",
+    "./textures/skybox/left.jpg",
+  };
+
+  skybox.InitialiseCubeMap();
+  cubemapTexture = skybox.LoadCubeMap(faces);
+
   // Setting up sun light
   Light sunLight(glm::vec3(-1), glm::vec3(1, 1, 1), 1);
 
   // Create Scene
   activeScene = new Scene(
-    &camera, glm::vec2(kWindowWidth, kWindowHeight), sunLight, ambientLight);
+    &camera,
+    glm::vec2(kWindowWidth, kWindowHeight),
+    sunLight,
+    ambientLight,
+    cubemapTexture);
+
   activeScene->AddLight(new Light(
     glm::vec3(0, 3, 5),
     glm::vec3(1, 0, 0),
     50)); // Red, pointed at front model
+
   activeScene->AddLight(new Light(
     glm::vec3(0, 3, -5),
     glm::vec3(1, 1, 1),
     50)); // White, pointed at back of model
+
   activeScene->AddLight(new Light(
     glm::vec3(-5, 3, 0), glm::vec3(0, 1, 0), 50)); // Green, pointed from left
+
   activeScene->AddLight(new Light(
     glm::vec3(5, 3, 0), glm::vec3(0, 0, 1), 50)); // Blue, pointed from right
 
 
   // Load Models
-  soulspearMesh.InitialiseFromFile("./Models/soulspear.obj");
-  soulspearMesh.LoadMaterial("./Models/soulspear.mtl");
+  soulspearMesh.InitialiseFromFile("./models/soulspear.obj");
+  soulspearMesh.LoadMaterial("./models/soulspear.mtl");
   bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
-  bunnyMesh.LoadMaterial("./Models/bunny.mtl");
-  lucyMesh.InitialiseFromFile("./Models/Lucy.obj");
-  lucyMesh.LoadMaterial("./Models/Lucy.mtl");
+  bunnyMesh.LoadMaterial("./models/bunny.mtl");
+  lucyMesh.InitialiseFromFile("./models/Lucy.obj");
+  lucyMesh.LoadMaterial("./models/Lucy.mtl");
 
   // Create instances
-  Instance* quadInstance =
-    new Instance(quadTransform, &quadMesh, &simplePhongShader);
+  //Instance* quadInstance = new Instance(quadTransform, &quadMesh, &simplePhongShader);
   Instance* soulspearInstance =
     new Instance(soulspearTransform, &soulspearMesh, &normalPhongShader);
-  Instance* bunnyInstance =
-    new Instance(bunnyTransform, &bunnyMesh, &phongNoTextureShader);
-  Instance* lucyInstance =
-    new Instance(lucyTransform, &lucyMesh, &phongNoTextureShader);
+  //Instance* bunnyInstance = new Instance(bunnyTransform, &bunnyMesh, &phongNoTextureShader);
+  //Instance* lucyInstance = new Instance(lucyTransform, &lucyMesh, &phongNoTextureShader);
+  //Instance* skyboxInstance = new Instance(glm::mat4(1), &skybox, &skyboxShader);
 
   // Add Instances to Scene
-  activeScene->AddInstance(quadInstance);
-  //activeScene->AddInstance(soulspearInstance);
-  activeScene->AddInstance(bunnyInstance);
+  //activeScene->AddInstance(quadInstance);
+  activeScene->AddInstance(soulspearInstance);
+  // activeScene->AddInstance(bunnyInstance);
   // activeScene->AddInstance(lucyInstance);
 
   return true;
@@ -206,9 +234,17 @@ void Application::Draw()
   ///// Everything goes below here related to drawing /////
 
   // Create 10x10 grid
-  CreateGrid();
+  //CreateGrid();
 
   aie::Gizmos::draw(activeScene->GetProjectionView());
+
+  skyboxShader.bind();
+  skyboxShader.bindUniform("Projection", activeScene->GetProjectionMatrix());
+  skyboxShader.bindUniform("View", activeScene->GetViewMatrix());
+
+  glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+  skybox.Draw();
+  glDepthMask(true);
 
   // Idealy, a MeshRenderer would handle working out which shader is being used,
   // it would bundle all that are using the same one together, process those and
