@@ -5,6 +5,7 @@
 #include "Mesh.h"
 #include "Scene.h"
 #include "Shader.h"
+#include "Skyubox.h"
 #include "Texture.h"
 #include "glad.h"
 #include "glm/ext.hpp"
@@ -70,6 +71,7 @@ protected:
   Mesh bunnyMesh;
   Mesh soulspearMesh;
   Mesh lucyMesh;
+  Skybox skybox;
 
   // Projection & View
   glm::mat4 projection;

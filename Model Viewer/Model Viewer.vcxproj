@@ -57,11 +57,13 @@
     <None Include="data\Models\Dragon.mtl" />
     <None Include="data\Models\Lucy.mtl" />
     <None Include="data\Models\soulspear.mtl" />
+    <None Include="data\shaders\fragment\cubemapShader.frag" />
     <None Include="data\Shaders\Fragment\normalPhongShader.frag" />
     <None Include="data\Shaders\Fragment\phongNoTextureShader.frag" />
     <None Include="data\Shaders\Fragment\phongShader.frag" />
     <None Include="data\Shaders\Fragment\simpleShader.frag" />
     <None Include="data\Shaders\Fragment\toonShader.frag" />
+    <None Include="data\shaders\vertex\cubemapShader.vert" />
     <None Include="data\Shaders\Vertex\normalPhongShader.vert" />
     <None Include="data\Shaders\Vertex\phongNoTextureShader.vert" />
     <None Include="data\Shaders\Vertex\phongShader.vert" />

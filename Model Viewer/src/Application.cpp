@@ -57,25 +57,25 @@ bool Application::Startup()
   // Load shaders
   // Shader List: simpleShader, phongShader, phongNoTexture, normalPhongShader
   simpleShader.loadShader(
-    aie::eShaderStage::VERTEX, "./Shaders/Vertex/simpleShader.vert");
+    aie::eShaderStage::VERTEX, "./shaders/vertex/simpleShader.vert");
   simpleShader.loadShader(
-    aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/simpleShader.frag");
+    aie::eShaderStage::FRAGMENT, "./shaders/fragment/simpleShader.frag");
 
   simplePhongShader.loadShader(
-    aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongShader.vert");
+    aie::eShaderStage::VERTEX, "./shaders/vertex/phongShader.vert");
   simplePhongShader.loadShader(
-    aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/phongShader.frag");
+    aie::eShaderStage::FRAGMENT, "./shaders/fragment/phongShader.frag");
 
   phongNoTextureShader.loadShader(
-    aie::eShaderStage::VERTEX, "./Shaders/Vertex/phongNoTextureShader.vert");
+    aie::eShaderStage::VERTEX, "./shaders/vertex/phongNoTextureShader.vert");
   phongNoTextureShader.loadShader(
     aie::eShaderStage::FRAGMENT,
-    "./Shaders/Fragment/phongNoTextureShader.frag");
+    "./shaders/fragment/phongNoTextureShader.frag");
 
   normalPhongShader.loadShader(
-    aie::eShaderStage::VERTEX, "./Shaders/Vertex/normalPhongShader.vert");
+    aie::eShaderStage::VERTEX, "./shaders/vertex/normalPhongShader.vert");
   normalPhongShader.loadShader(
-    aie::eShaderStage::FRAGMENT, "./Shaders/Fragment/normalPhongShader.frag");
+    aie::eShaderStage::FRAGMENT, "./shaders/fragment/normalPhongShader.frag");
 
   if (simpleShader.link() == false)
   {
@@ -103,7 +103,7 @@ bool Application::Startup()
 
   quadMesh.InitialiseQuad();
   quadMesh.CreateMaterial(
-    glm::vec3(1), glm::vec3(1), glm::vec3(1), "./Textures/numbered_grid.tga");
+    glm::vec3(1), glm::vec3(1), glm::vec3(1), "./textures/numbered_grid.tga");
 
   glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
   glm::mat4 bunnyTransform = {
