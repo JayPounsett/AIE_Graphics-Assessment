@@ -11,11 +11,9 @@ namespace aie {
 class ShaderProgram;
 }
 
-class Mesh
-{
+class Mesh {
 public:
-  struct Vertex
-  {
+  struct Vertex {
     glm::vec4 position;
     glm::vec4 normal;
     glm::vec2 texCoord;
@@ -30,12 +28,11 @@ public:
       Ka{0.25, 0.25, 0.25},
       Kd{0.25, 0.25, 0.25},
       Ks{0.25, 0.25, 0.25},
-      specularPower(32.0f)
-  {
-  }
+      specularPower(32.0f) {}
 
   virtual ~Mesh();
 
+  void InitialiseCube();
   void InitialiseQuad();
   void Initialise(
     unsigned int vertexCount,
@@ -49,7 +46,11 @@ public:
   void ApplyMaterial(aie::ShaderProgram* shader);
   void LoadMaterial(const char* fileName);
   void CreateMaterial(
-    glm::vec3 Ka, glm::vec3 Kd, glm::vec3 Ks, const char* filePath);
+    glm::vec3 Ka,
+    glm::vec3 Kd,
+    glm::vec3 Ks,
+    float specularPower,
+    const char* filePath);
 
 protected:
   unsigned int triCount;
@@ -61,7 +62,7 @@ protected:
   glm::vec3 Kd; // Diffuse colour of the surface
   glm::vec3 Ks; // Specular colour of the surface
 
-  float specularPower = 2; // Tightness of specular highlights
+  float specularPower = 32.0f; // Tightness of specular highlights
 
   aie::Texture mapKd; // Diffuse texture map
   aie::Texture mapKs; // Specular texture map

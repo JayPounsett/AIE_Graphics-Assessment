@@ -57,7 +57,7 @@ void Skybox::InitialiseCubeMap()
   vertices[22].position = {1.0f, -1.0f, 1.0f, 1};
   vertices[23].position = {-1.0f, -1.0f, 1.0f, 1};
 
-  // Quad 5
+  // Quad 5 (Back)
   vertices[24].position = {-1.0f, 1.0f, -1.0f, 1};
   vertices[25].position = {1.0f, 1.0f, -1.0f, 1};
   vertices[26].position = {1.0f, 1.0f, 1.0f, 1};
@@ -66,7 +66,7 @@ void Skybox::InitialiseCubeMap()
   vertices[28].position = {-1.0f, 1.0f, 1.0f, 1};
   vertices[29].position = {-1.0f, 1.0f, -1.0f, 1};
 
-  // Quad 6
+  // Quad 6 (Front)
   vertices[30].position = {-1.0f, -1.0f, -1.0f, 1};
   vertices[31].position = {-1.0f, -1.0f, 1.0f, 1};
   vertices[32].position = {1.0f, -1.0f, -1.0f, 1};

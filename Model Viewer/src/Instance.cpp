@@ -8,8 +8,7 @@
 
 Instance::~Instance() {}
 
-void Instance::Draw(Scene* scene)
-{
+void Instance::Draw(Scene* scene) {
   // Bind shader
   shader->bind();
 
@@ -23,10 +22,15 @@ void Instance::Draw(Scene* scene)
 
   // Bind our point lights
   int numLights = scene->GetNumberLights();
-  shader->bindUniform("numLights", numLights);
-  shader->bindUniform(
-    "PointLightPosition", numLights, scene->GetPointPositions());
-  shader->bindUniform("PointLightColour", numLights, scene->GetPointColours());
+  
+  if (shader->bindUniform("numLights", numLights) == true) {
+    shader->bindUniform("numLights", numLights);
+    shader->bindUniform(
+      "PointLightPosition", numLights, scene->GetPointPositions());
+    shader->bindUniform(
+      "PointLightColour", numLights, scene->GetPointColours());
+  }
+
 
   // Bind transform
   auto pvm = scene->GetProjectionView() * transform;
@@ -45,8 +49,7 @@ void Instance::Draw(Scene* scene)
 }
 
 void Instance::MakeTransform(
-  glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 scale)
-{
+  glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 scale) {
   transform =
     glm::translate(glm::mat4(1), position) *
     glm::rotate(glm::mat4(1), glm::radians(eulerAngles.z), glm::vec3(0, 0, 1)) *

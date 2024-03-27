@@ -32,7 +32,8 @@ public:
     : camera{camera},
       windowSize{windowSize},
       sunLight{sunLight},
-      ambientLight{ambientLight}
+      ambientLight{ambientLight},
+      skyboxTextureID(skyboxTextureID)
   {
   }
 

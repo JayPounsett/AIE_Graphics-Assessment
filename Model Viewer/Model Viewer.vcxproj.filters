@@ -160,17 +160,17 @@
     <None Include="data\Shaders\Vertex\phongNoTextureShader.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
-    <None Include="data\Shaders\Fragment\toonShader.frag">
-      <Filter>Resource Files\Shaders\Fragment</Filter>
-    </None>
-    <None Include="data\Shaders\Vertex\toonShader.vert">
-      <Filter>Resource Files\Shaders\Vertex</Filter>
-    </None>
     <None Include="data\shaders\vertex\cubemapShader.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
     <None Include="data\shaders\fragment\cubemapShader.frag">
       <Filter>Resource Files\Shaders\Fragment</Filter>
+    </None>
+    <None Include="data\shaders\fragment\reflectionShader.frag">
+      <Filter>Resource Files\Shaders\Fragment</Filter>
+    </None>
+    <None Include="data\shaders\vertex\reflectionShader.vert">
+      <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

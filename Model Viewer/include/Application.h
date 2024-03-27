@@ -11,14 +11,6 @@
 #include "glm/ext.hpp"
 #include "glm/glm.hpp"
 
-// -= Future Refactoring =-
-// Entity Component System?
-// Application class: window, view, perspective, aspect ratio, FOV, clip planes,
-// plus virtual functions Object class: transform, position, etc Mesh Class:
-// mesh data, etc MeshRenderer Class: shaders, colours, Draw(), LoadMaterial(),
-// ApplyMaterial() etc
-// ... and so on
-
 class Instance;
 
 class Application
@@ -66,13 +58,17 @@ protected:
   aie::ShaderProgram phongNoTextureShader;
   aie::ShaderProgram normalPhongShader;
   aie::ShaderProgram skyboxShader;
+  aie::ShaderProgram reflectionShader;
 
   // Meshes
+  Skybox skybox;
   Mesh quadMesh;
   Mesh bunnyMesh;
   Mesh soulspearMesh;
   Mesh lucyMesh;
-  Skybox skybox;
+  Mesh mirrorCube;
+
+  glm::mat4 mirrorCubeTransform;
 
   unsigned int cubemapTexture;
 
