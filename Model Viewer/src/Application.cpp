@@ -118,8 +118,9 @@ bool Application::Startup() {
   }
 #pragma endregion
 
-  //quadMesh.InitialiseQuad();
-  //quadMesh.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1), "./textures/numbered_grid.tga");
+  // quadMesh.InitialiseQuad();
+  // quadMesh.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1),
+  // "./textures/numbered_grid.tga");
 
   glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 1};
   glm::mat4 bunnyTransform = {
@@ -135,25 +136,36 @@ bool Application::Startup() {
   glm::mat4 mirrorCubeTransform = {
     1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
 
+  //mirrorCubeTransform =
+  //  glm::rotate(mirrorCubeTransform, glm::radians(30.0f), glm::vec3(1, 0, 0));
+  //mirrorCubeTransform =
+  //  glm::rotate(mirrorCubeTransform, glm::radians(45.0f), glm::vec3(0, 1, 0));
+
   // Setting up the skybox
-  std::vector<std::string> faces{
-    "./textures/skybox/right.jpg",
-    "./textures/skybox/left.jpg",
-    "./textures/skybox/top.jpg",
-    "./textures/skybox/bottom.jpg",
-    "./textures/skybox/front.jpg",
-    "./textures/skybox/back.jpg",
-  };
+  std::vector<std::string> faces{//"./textures/skybox/right.jpg",
+                                 //"./textures/skybox/left.jpg",
+                                 //"./textures/skybox/top.jpg",
+                                 //"./textures/skybox/bottom.jpg",
+                                 //"./textures/skybox/front.jpg",
+                                 //"./textures/skybox/back.jpg",
+                                 "./textures/skybox/stormydays_ft.tga",
+                                 "./textures/skybox/stormydays_bk.tga",
+                                 "./textures/skybox/stormydays_up.tga",
+                                 "./textures/skybox/stormydays_dn.tga",
+                                 "./textures/skybox/stormydays_rt.tga",
+                                 "./textures/skybox/stormydays_lf.tga"};
 
   skybox.InitialiseCubeMap();
   cubemapTexture = skybox.LoadCubeMap(faces);
 
   // Mirror Cube
   mirrorCube.InitialiseCube();
-  mirrorCube.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1), 50.0f, nullptr);
-  
+  //mirrorCube.CreateMaterial(
+  //  glm::vec3(1), glm::vec3(1), glm::vec3(1), 50.0f, nullptr);
+
   // Setting up sun light
   Light sunLight(glm::vec3(-1), glm::vec3(1, 1, 1), 1);
+  ambientLight = {0.25, 0.25, 0.25};
 
   // Create Scene
   activeScene = new Scene(
@@ -204,7 +216,8 @@ bool Application::Startup() {
     new Instance(bunnyTransform, &bunnyMesh, &phongNoTextureShader);
   Instance* lucyInstance =
     new Instance(lucyTransform, &lucyMesh, &phongNoTextureShader);
-  Instance* mirrorCubeInstance = new Instance(mirrorCubeTransform, &mirrorCube, &reflectionShader);
+  Instance* mirrorCubeInstance =
+    new Instance(mirrorCubeTransform, &mirrorCube, &reflectionShader);
 
   // Add Instances to Scene
   // activeScene->AddInstance(quadInstance);
@@ -251,7 +264,7 @@ void Application::Draw() {
   ///// Everything goes below here related to drawing /////
 
   //// Create 10x10 grid
-  //CreateGrid();
+  // CreateGrid();
 
   aie::Gizmos::draw(activeScene->GetProjectionView());
 
@@ -265,17 +278,18 @@ void Application::Draw() {
   glDepthMask(true);
 
   //// Draw Mirror Cube
-  //reflectionShader.bind();
-  //reflectionShader.bindUniform("Projection", activeScene->GetProjectionMatrix());
-  //reflectionShader.bindUniform("View", activeScene->GetViewMatrix());
-  //reflectionShader.bindUniform("ModelMatrix", mirrorCubeTransform);
+  // reflectionShader.bind();
+  // reflectionShader.bindUniform("Projection",
+  // activeScene->GetProjectionMatrix()); reflectionShader.bindUniform("View",
+  // activeScene->GetViewMatrix()); reflectionShader.bindUniform("ModelMatrix",
+  // mirrorCubeTransform);
   //
-  //glActiveTexture(GL_TEXTURE4);
-  //glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
-  //auto location = glGetUniformLocation(reflectionShader.getHandle(), "skyboxTex");
-  //glUniform1i(location, 4);
+  // glActiveTexture(GL_TEXTURE4);
+  // glBindTexture(GL_TEXTURE_CUBE_MAP, cubemapTexture);
+  // auto location = glGetUniformLocation(reflectionShader.getHandle(),
+  // "skyboxTex"); glUniform1i(location, 4);
 
-  //mirrorCube.Draw();
+  // mirrorCube.Draw();
 
   activeScene->Draw();
 

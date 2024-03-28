@@ -23,7 +23,7 @@ void main(){
 
 	vec3 reflectionDirection = reflect(V, N);
 
-	vec3 reflectionColour = texture(skyboxTex, reflectionDirection).rgb * SchlickApprox(V, N);
+	vec3 reflectionColour = texture(skyboxTex, reflectionDirection).rgb; /* * SchlickApprox(V, N); */
 
 	// Show no colour and have surfaces act as a mirror
 	FragColour = vec4(reflectionColour, 1 );

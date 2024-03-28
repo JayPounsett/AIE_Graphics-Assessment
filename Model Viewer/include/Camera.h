@@ -8,8 +8,8 @@
 class Camera
 {
 public:
-  // Camera() : Camera(0, 0, {-10, 3, 0}, 0.07f) {} // Values given in lessons
-  Camera() : Camera(-90, -20, {0, 6, 12}, 0.07f) {}
+  Camera() : Camera(0, 0, {-10, 0, 0}, 0.07f) {} // Values given in lessons
+  //Camera() : Camera(-90, -20, {0, 6, 12}, 0.07f) {}
   Camera(float theta, float phi, glm::vec3 position, float ts)
     : theta(theta), phi(phi), position(position), turnSpeed(ts)
   {
@@ -47,7 +47,6 @@ private:
   const float kFov_90 = glm::pi<float>() * 0.25f;
   const float kNear_Clip = 0.01f;
   const float kFar_Clip = 1000.f;
-
 
   glm::vec3 forward = {0, 0, 0};
   glm::vec3 right = {0, 0, 0};

@@ -1,7 +1,6 @@
 #pragma once
 #include "Mesh.h"
-class Skybox : public Mesh
-{
+class Skybox : public Mesh {
 public:
   void InitialiseCubeMap();
   unsigned int LoadCubeMap(std::vector<std::string> faces);

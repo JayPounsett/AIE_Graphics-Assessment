@@ -13,8 +13,7 @@
 
 class Instance;
 
-class Application
-{
+class Application {
 public:
   bool Startup();
   bool Update();

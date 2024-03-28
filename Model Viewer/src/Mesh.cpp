@@ -37,6 +37,7 @@ void Mesh::InitialiseCube() {
   vertices[0].position = {1.0f, -1.0f, 1.0f, 1};
   vertices[1].position = {1.0f, 1.0f, 1.0f, 1};
   vertices[2].position = {-1.0f, 1.0f, 1.0f, 1};
+
   vertices[3].position = {-1.0f, 1.0f, 1.0f, 1};
   vertices[4].position = {-1.0f, -1.0f, 1.0f, 1};
   vertices[5].position = {1.0f, -1.0f, 1.0f, 1};
@@ -45,6 +46,7 @@ void Mesh::InitialiseCube() {
   vertices[6].position = {1.0f, 1.0f, -1.0f, 1};
   vertices[7].position = {1.0f, 1.0f, 1.0f, 1};
   vertices[8].position = {1.0f, -1.0f, 1.0f, 1};
+
   vertices[9].position = {1.0f, -1.0f, 1.0f, 1};
   vertices[10].position = {1.0f, -1.0f, -1.0f, 1};
   vertices[11].position = {1.0f, 1.0f, -1.0f, 1};
@@ -53,6 +55,7 @@ void Mesh::InitialiseCube() {
   vertices[12].position = {-1.0f, 1.0f, 1.0f, 1};
   vertices[13].position = {-1.0f, 1.0f, -1.0f, 1};
   vertices[14].position = {-1.0f, -1.0f, -1.0f, 1};
+
   vertices[15].position = {-1.0f, -1.0f, -1.0f, 1};
   vertices[16].position = {-1.0f, -1.0f, 1.0f, 1};
   vertices[17].position = {-1.0f, 1.0f, 1.0f, 1};
@@ -61,6 +64,7 @@ void Mesh::InitialiseCube() {
   vertices[18].position = {1.0f, 1.0f, -1.0f, 1};
   vertices[19].position = {1.0f, -1.0f, -1.0f, 1};
   vertices[20].position = {-1.0f, -1.0f, -1.0f, 1};
+
   vertices[21].position = {-1.0f, -1.0f, -1.0f, 1};
   vertices[22].position = {-1.0f, 1.0f, -1.0f, 1};
   vertices[23].position = {1.0f, 1.0f, -1.0f, 1};
@@ -69,6 +73,7 @@ void Mesh::InitialiseCube() {
   vertices[24].position = {1.0f, -1.0f, 1.0f, 1};
   vertices[25].position = {-1.0f, -1.0f, 1.0f, 1};
   vertices[26].position = {-1.0f, -1.0f, -1.0f, 1};
+
   vertices[27].position = {-1.0f, -1.0f, -1.0f, 1};
   vertices[28].position = {1.0f, -1.0f, -1.0f, 1};
   vertices[29].position = {1.0f, -1.0f, 1.0f, 1};
@@ -77,30 +82,32 @@ void Mesh::InitialiseCube() {
   vertices[30].position = {1.0f, 1.0f, 1.0f, 1};
   vertices[31].position = {1.0f, 1.0f, -1.0f, 1};
   vertices[32].position = {-1.0f, 1.0f, 1.0f, 1};
+
   vertices[33].position = {-1.0f, 1.0f, 1.0f, 1};
   vertices[34].position = {1.0f, 1.0f, -1.0f, 1};
   vertices[35].position = {-1.0f, 1.0f, -1.0f, 1};
 
   // Normals
+  // Orientation from camera facing down the positive x axis, to look at the 'front' (-10, 0)
   // Quad 1 (Right)
-  vertices[0].normal = {1, 0, 0, 0};
-  vertices[1].normal = {1, 0, 0, 0};
-  vertices[2].normal = {1, 0, 0, 0};
+  vertices[0].normal = {0, 1, 0, 0};
+  vertices[1].normal = {0, 1, 0, 0};
+  vertices[2].normal = {0, 1, 0, 0};
 
-  vertices[3].normal = {1, 0, 0, 0};
-  vertices[4].normal = {1, 0, 0, 0};
-  vertices[5].normal = {1, 0, 0, 0};
+  vertices[3].normal = {0, 1, 0, 0};
+  vertices[4].normal = {0, 1, 0, 0};
+  vertices[5].normal = {0, 1, 0, 0};
 
-  // Quad 2 (Left)
-  vertices[6].normal = {-1, 0, 0, 0};
-  vertices[7].normal = {-1, 0, 0, 0};
-  vertices[8].normal = {-1, 0, 0, 0};
+  // Quad 2 (Back)
+  vertices[6].normal = {0, 1, 0, 0};
+  vertices[7].normal = {0, 1, 0, 0};
+  vertices[8].normal = {0, 1, 0, 0};
 
-  vertices[9].normal = {-1, 0, 0, 0};
-  vertices[10].normal = {-1, 0, 0, 0};
-  vertices[11].normal = {-1, 0, 0, 0};
+  vertices[9].normal = {0, 1, 0, 0};
+  vertices[10].normal = {0, 1, 0, 0};
+  vertices[11].normal = {0, 1, 0, 0};
 
-  // Quad 3 (Top)
+  // Quad 3 (Front)
   vertices[12].normal = {0, 1, 0, 0};
   vertices[13].normal = {0, 1, 0, 0};
   vertices[14].normal = {0, 1, 0, 0};
@@ -109,16 +116,16 @@ void Mesh::InitialiseCube() {
   vertices[16].normal = {0, 1, 0, 0};
   vertices[17].normal = {0, 1, 0, 0};
 
-  // Quad 4 (Bottom)
-  vertices[18].normal = {0, -1, 0, 0};
-  vertices[19].normal = {0, -1, 0, 0};
-  vertices[20].normal = {0, -1, 0, 0};
+  // Quad 4 (Left)
+  vertices[18].normal = {0, 1, 0, 0};
+  vertices[19].normal = {0, 1, 0, 0};
+  vertices[20].normal = {0, 1, 0, 0};
 
-  vertices[21].normal = {0, -1, 0, 0};
-  vertices[22].normal = {0, -1, 0, 0};
-  vertices[23].normal = {0, -1, 0, 0};
+  vertices[21].normal = {0, 1, 0, 0};
+  vertices[22].normal = {0, 1, 0, 0};
+  vertices[23].normal = {0, 1, 0, 0};
 
-  // Quad 5 (Back)
+  // Quad 5 (Bottom)
   vertices[24].normal = {0, 0, 1, 0};
   vertices[25].normal = {0, 0, 1, 0};
   vertices[26].normal = {0, 0, 1, 0};
@@ -127,14 +134,14 @@ void Mesh::InitialiseCube() {
   vertices[28].normal = {0, 0, 1, 0};
   vertices[29].normal = {0, 0, 1, 0};
 
-  // Quad 6 (Front)
-  vertices[30].normal = {0, 0, -1, 0};
-  vertices[31].normal = {0, 0, -1, 0};
-  vertices[32].normal = {0, 0, -1, 0};
+  // Quad 6 (Top)
+  vertices[30].normal = {0, 0, 1, 0};
+  vertices[31].normal = {0, 0, 1, 0};
+  vertices[32].normal = {0, 0, 1, 0};
 
-  vertices[33].normal = {0, 0, -1, 0};
-  vertices[34].normal = {0, 0, -1, 0};
-  vertices[35].normal = {0, 0, -1, 0};
+  vertices[33].normal = {0, 0, 1, 0};
+  vertices[34].normal = {0, 0, 1, 0};
+  vertices[35].normal = {0, 0, 1, 0};
 
   // fill vertex buffer
   glBufferData(GL_ARRAY_BUFFER, 36 * sizeof(Vertex), vertices, GL_STATIC_DRAW);
@@ -146,6 +153,10 @@ void Mesh::InitialiseCube() {
   // enable second element as normal
   glEnableVertexAttribArray(1);
   glVertexAttribPointer(1, 4, GL_FLOAT, GL_TRUE, sizeof(Vertex), (void*)16);
+
+  // enable third element as texcoord
+  glEnableVertexAttribArray(2);
+  glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)32);
 
   // unbind buffers
   glBindVertexArray(0);

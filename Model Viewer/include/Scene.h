@@ -4,14 +4,12 @@
 
 #include "glm/glm.hpp"
 
-struct Light
-{
+struct Light {
   glm::vec3 direction;
   glm::vec3 colour;
 
   Light(glm::vec3 position, glm::vec3 colour, float intensity)
-    : direction(position)
-  {
+    : direction(position) {
     this->colour = colour * intensity;
   }
 };
@@ -20,8 +18,7 @@ class Camera;
 class Instance;
 class Light;
 
-class Scene
-{
+class Scene {
 public:
   Scene(
     Camera* camera,
@@ -33,9 +30,7 @@ public:
       windowSize{windowSize},
       sunLight{sunLight},
       ambientLight{ambientLight},
-      skyboxTextureID(skyboxTextureID)
-  {
-  }
+      skyboxTextureID(skyboxTextureID) {}
 
   ~Scene();
   void AddInstance(Instance* instance);
@@ -43,7 +38,7 @@ public:
 
   Camera* GetCamera() { return camera; }
 
-    // Check video at 3h52m on the consts
+  // Check video at 3h52m on the consts
   const glm::vec2 GetWindowSize() const { return windowSize; }
   const glm::mat4 GetProjectionView() const { return pv; }
   const glm::mat4 GetProjectionMatrix() const;
