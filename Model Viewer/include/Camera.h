@@ -5,15 +5,14 @@
 #include "glm/ext.hpp"
 #include "glm/glm.hpp"
 
-class Camera
-{
+class Camera {
 public:
-  Camera() : Camera(0, 0, {-10, 0, 0}, 0.07f) {} // Values given in lessons
-  //Camera() : Camera(-90, -20, {0, 6, 12}, 0.07f) {}
+  // Camera() : Camera(0, 0, {-10, 0, 0}, 0.07f) {} // Values given in lessons
+
+  // Moved camera to look at the model's correctly
+  Camera() : Camera(-90, -20, {0, 6, 20}, 0.07f) {}
   Camera(float theta, float phi, glm::vec3 position, float ts)
-    : theta(theta), phi(phi), position(position), turnSpeed(ts)
-  {
-  }
+    : theta(theta), phi(phi), position(position), turnSpeed(ts) {}
 
   ~Camera();
 
@@ -22,8 +21,7 @@ public:
   float GetThetaRadians() const { return glm::radians(theta); }
   float GetPhiRadians() const { return glm::radians(phi); }
 
-  glm::vec3 GetForward() const
-  {
+  glm::vec3 GetForward() const {
     return {cos(phiR) * cos(thetaR), sin(phiR), cos(phiR) * sin(thetaR)};
   }
   glm::vec3 GetRight() const { return {-sin(thetaR), 0, cos(thetaR)}; }

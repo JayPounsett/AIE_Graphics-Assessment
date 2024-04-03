@@ -6,6 +6,7 @@
 #include "Scene.h"
 #include "Shader.h"
 
+
 Instance::~Instance() {}
 
 void Instance::Draw(Scene* scene) {
@@ -22,15 +23,11 @@ void Instance::Draw(Scene* scene) {
 
   // Bind our point lights
   int numLights = scene->GetNumberLights();
-  
-  if (shader->bindUniform("numLights", numLights) == true) {
-    shader->bindUniform("numLights", numLights);
-    shader->bindUniform(
-      "PointLightPosition", numLights, scene->GetPointPositions());
-    shader->bindUniform(
-      "PointLightColour", numLights, scene->GetPointColours());
-  }
 
+  shader->bindUniform("numLights", numLights);
+  shader->bindUniform(
+    "PointLightPosition", numLights, scene->GetPointPositions());
+  shader->bindUniform("PointLightColour", numLights, scene->GetPointColours());
 
   // Bind transform
   auto pvm = scene->GetProjectionView() * transform;

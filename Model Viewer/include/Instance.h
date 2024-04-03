@@ -1,28 +1,24 @@
 #pragma once
+#include "glm/ext.hpp"
 #include "glm/glm.hpp"
+#include <vector>
 
 class Camera;
 class Light;
 class Mesh;
 class Scene;
 
-namespace aie
-{
+namespace aie {
 class ShaderProgram;
 };
 
-class Instance
-{
+class Instance {
 public:
   Instance(glm::mat4 transform, Mesh* mesh, aie::ShaderProgram* shader)
-    : transform(transform), mesh(mesh), shader(shader)
-  {
-    this->SetDoesInstanceExist(true);
-  }
-  Instance(Mesh* mesh, aie::ShaderProgram* shader) : mesh(mesh), shader(shader)
-  {
+    : transform(transform), mesh(mesh), shader(shader) {}
+  Instance(Mesh* mesh, aie::ShaderProgram* shader)
+    : mesh(mesh), shader(shader) {
     MakeTransform(glm::vec3(0), glm::vec3(0), glm::vec3(1));
-    this->SetDoesInstanceExist(true);
   }
   Instance(
     glm::vec3 position,
@@ -31,8 +27,7 @@ public:
     glm::mat4 transform,
     Mesh* mesh,
     aie::ShaderProgram* shader)
-    : transform(transform), mesh(mesh), shader(shader)
-  {
+    : transform(transform), mesh(mesh), shader(shader) {
     MakeTransform(position, rotation, scale);
     this->SetDoesInstanceExist(true);
   }
@@ -44,9 +39,19 @@ public:
 
   bool CheckDoesInstanceExist() { return this->doesInstanceExist; }
 
+  Mesh* GetMesh() { return this->mesh; }
+
+  glm::mat4 GetTransform() { return this->transform; }
+
+  glm::mat4 RotateModel(float angle, glm::vec3 rotationAxis) {
+    return this->transform = glm::rotate(
+             this->GetTransform(), glm::radians(angle), rotationAxis);
+  }
+
+  float& GetAngle() { return angle; }
+
 protected:
-  bool SetDoesInstanceExist(bool state)
-  {
+  bool SetDoesInstanceExist(bool state) {
     return this->doesInstanceExist = state;
   }
 
@@ -55,4 +60,6 @@ protected:
   Mesh* mesh;
   aie::ShaderProgram* shader;
   bool doesInstanceExist = false;
+  
+  float angle = 0.0f;
 };

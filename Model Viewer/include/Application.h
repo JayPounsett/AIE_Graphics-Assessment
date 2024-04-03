@@ -64,7 +64,7 @@ protected:
   Mesh quadMesh;
   Mesh bunnyMesh;
   Mesh soulspearMesh;
-  Mesh lucyMesh;
+  Mesh dragonMesh;
   Mesh mirrorCube;
 
   glm::mat4 mirrorCubeTransform;

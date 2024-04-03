@@ -72,4 +72,6 @@ protected:
   unsigned int skyboxTextureID;
 
   glm::mat4 pv;
+
+  glm::vec3 rotationAxis = glm::vec3(0, 1, 0);
 };

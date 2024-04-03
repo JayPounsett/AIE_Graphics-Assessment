@@ -25,10 +25,10 @@ public:
       vao(0),
       vbo(0),
       ibo(0),
-      Ka{0.25, 0.25, 0.25},
-      Kd{0.25, 0.25, 0.25},
-      Ks{0.25, 0.25, 0.25},
-      specularPower(32.0f) {}
+      Ka{0, 0, 0},
+      Kd{0, 0, 0},
+      Ks{0, 0, 0},
+      specularPower(32.0f){}
 
   virtual ~Mesh();
 
@@ -53,6 +53,12 @@ public:
     const char* filePath);
 
 protected:
+  void CalculateTangents(
+    Vertex* vertices,
+    unsigned int vertexCount,
+    const std::vector<unsigned int>& indices);
+
+protected:
   unsigned int triCount;
 
   // Vertex Array Object, Vertex Buffer Object, Index Buffer Object
@@ -68,8 +74,6 @@ protected:
   aie::Texture mapKs; // Specular texture map
   aie::Texture mapBump; // Normal texture map
 
-  void CalculateTangents(
-    Vertex* vertices,
-    unsigned int vertexCount,
-    const std::vector<unsigned int>& indices);
+  float rotationAngle = 0.0f;
+
 };
