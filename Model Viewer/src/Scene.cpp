@@ -51,13 +51,16 @@ void Scene::Draw() {
   }
 
   aie::ImGui_NewFrame();
-  ImGui::Begin("Light Settings");
+  
+  ImGui::Begin("Scene Settings"); 
+  ImGui::CollapsingHeader("Sunlight");
   ImGui::DragFloat3(
     "Sunlight Direction", &sunLight.direction[0], 0.1f, -1.0f, 1.0f);
   ImGui::DragFloat3("Sunlight Colour", &sunLight.colour[0], 0.1f, 0.0f, 2.0f);
-
+  
   // UI to Rotate Model
-   for (int i = 0; i < instances.size(); i++) {
+  ImGui::CollapsingHeader("Rotate Models");
+  for (int i = 0; i < instances.size(); i++) {
     ImGui::SliderFloat(
       ("Rotate " + instances[i]->GetInstanceName()).c_str(),
       &instances[i]->GetAngle(),

@@ -172,6 +172,7 @@
     <None Include="data\shaders\vertex\reflectionShader.vert">
       <Filter>Resource Files\Shaders\Vertex</Filter>
     </None>
+    <None Include="ClassDiagram.cd" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="data\Textures\numbered_grid.tga">

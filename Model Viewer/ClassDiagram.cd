@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Application">
+    <Position X="0.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gBYAAAIg4gOAAggwgAAAQyIIEAJEIAQIA5AACCBAAAA=</HashCode>
+      <FileName>include\Application.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Camera">
+    <Position X="5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUCAgAAACCCAIAAYIAAIAQAACAAAEgAAAAQAoAAgAA=</HashCode>
+      <FileName>include\Camera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="aie::ShaderProgram">
+    <Position X="11" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAIAACAAIAAAAQAAAAAgABAAAAAAEAAAAABAABQAcA=</HashCode>
+      <FileName>include\Shader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Instance">
+    <Position X="7" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QQAAAAAAAAAAAggAAABAABAAAgAFAAAAUAAAAEBAAAA=</HashCode>
+      <FileName>include\Instance.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Mesh">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Struct Name="Mesh::Vertex" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>include\Mesh.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Struct>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CIAICIggAAEEg0AAABAAgAABAAAQAAAEBQQQBAAAAAA=</HashCode>
+      <FileName>include\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Scene">
+    <Position X="3" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAQAAQAGAgACCgAAgAAAYAAKQCBAUAwACAAARAAQAAA=</HashCode>
+      <FileName>include\Scene.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Skybox">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAQIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Skybox.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="Light">
+    <Position X="11" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAIAAAAAAAAgAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>include\Scene.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

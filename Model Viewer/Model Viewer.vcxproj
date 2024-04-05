@@ -54,6 +54,7 @@
     <ClInclude Include="include\Skybox.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ClassDiagram.cd" />
     <None Include="data\Models\Buddha.mtl" />
     <None Include="data\Models\Bunny.mtl" />
     <None Include="data\Models\Dragon.mtl" />
