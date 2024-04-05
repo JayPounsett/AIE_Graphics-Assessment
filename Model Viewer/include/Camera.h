@@ -10,7 +10,7 @@ public:
   // Camera() : Camera(0, 0, {-10, 0, 0}, 0.07f) {} // Values given in lessons
 
   // Moved camera to look at the model's correctly
-  Camera() : Camera(-90, -20, {0, 6, 20}, 0.07f) {}
+  Camera() : Camera(-90, -20, {0, 15, 20}, 0.07f) {}
   Camera(float theta, float phi, glm::vec3 position, float ts)
     : theta(theta), phi(phi), position(position), turnSpeed(ts) {}
 

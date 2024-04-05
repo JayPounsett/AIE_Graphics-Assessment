@@ -58,10 +58,10 @@ bool Application::Startup() {
   // simpleShader.loadShader(
   //   aie::eShaderStage::FRAGMENT, "./shaders/fragment/simpleShader.frag");
 
-  // simplePhongShader.loadShader(
-  //   aie::eShaderStage::VERTEX, "./shaders/vertex/phongShader.vert");
-  // simplePhongShader.loadShader(
-  //   aie::eShaderStage::FRAGMENT, "./shaders/fragment/phongShader.frag");
+   //simplePhongShader.loadShader(
+   //  aie::eShaderStage::VERTEX, "./shaders/vertex/phongShader.vert");
+   //simplePhongShader.loadShader(
+   //  aie::eShaderStage::FRAGMENT, "./shaders/fragment/phongShader.frag");
 
   phongNoTextureShader.loadShader(
     aie::eShaderStage::VERTEX, "./shaders/vertex/phongNoTextureShader.vert");
@@ -118,19 +118,17 @@ bool Application::Startup() {
   }
 #pragma endregion
 
-  // quadMesh.InitialiseQuad();
-  // quadMesh.CreateMaterial(glm::vec3(1), glm::vec3(1), glm::vec3(1),
-  // "./textures/numbered_grid.tga");
-  // glm::mat4 quadTransform = {10, 0, 0, 0, 0, 10, 0, 0, 0, 0, 10, 0, 0, 0, 0,
-  // 1}; glm::mat4 bunnyTransform = {0.5, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0.5, 0,
-  // -5, 0, -5, 1}; glm::mat4 dragonTransform = {0.5, 0, 0, 0, 0, 0.5, 0, 0, 0,
-  // 0, 0.5, 0, 5, 0, -5, 1};
+  glm::mat4 dragonTransform = {
+    1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, 0, 1.5, 0, 0, 0, -20, 1};
+  
+  glm::mat4 soulspearTransform1 = {
+    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, -5, 0.5, 0, 1};
 
-  glm::mat4 soulspearTransform = {
-    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1};
+  glm::mat4 soulspearTransform2 = {
+    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0.5, 0, 1};
 
   glm::mat4 mirrorCubeTransform = {
-    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 5, 0, 0, 1};
+    1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, mirrorCubeTransform[1].y, 0, 1};
 
   // Setting up the skybox
   std::vector<std::string> faces{
@@ -148,7 +146,7 @@ bool Application::Startup() {
   mirrorCube.InitialiseCube();
 
   // Setting up sun light
-  Light sunLight(glm::vec3(-1), glm::vec3(1, 1, 1), 1);
+  Light sunLight(glm::vec3(-1), glm::vec3(0, 0, 0), 1);
   ambientLight = {0.25, 0.25, 0.25};
 
   // Create Scene
@@ -159,42 +157,46 @@ bool Application::Startup() {
     ambientLight,
     cubemapTexture);
 
-  // Adding two point lights (red at front, green at back)
-  // Red, pointed at front model
-  activeScene->AddLight(new Light(glm::vec3(0, 3, 5), glm::vec3(1, 0, 0), 50));
+  // Adding point lights
+  // Left Model
+  activeScene->AddLight(new Light(
+    glm::vec3(-5, 3, 5), glm::vec3(1, 0, 0), 50)); // Red, front of left model
+  activeScene->AddLight(new Light(
+    glm::vec3(-5, 3, -5), glm::vec3(0, 1, 0), 50)); // Green, back of left model
 
-  // Green, pointed from back
-  activeScene->AddLight(new Light(glm::vec3(0, 3, -5), glm::vec3(0, 1, 0), 50));
+  // Right Model
+  activeScene->AddLight(new Light(
+    glm::vec3(5, 3, 5), glm::vec3(0.4, 0, 1), 50)); // Purple, front of left model
+  activeScene->AddLight(new Light(
+    glm::vec3(5, 3, -5),
+    glm::vec3(1, 1, 0.8),
+    50)); // Yellow, back of left model
+
 
   // Load Models
+  dragonMesh.InitialiseFromFile("./models/dragon.obj");
+  dragonMesh.LoadMaterial("./models/dragon.mtl");
   soulspearMesh.InitialiseFromFile("./models/soulspear.obj");
   soulspearMesh.LoadMaterial("./models/soulspear.mtl");
-  // bunnyMesh.InitialiseFromFile("./Models/bunny.obj");
-  // bunnyMesh.LoadMaterial("./models/bunny.mtl");
-  // dragonMesh.InitialiseFromFile("./models/Dragon.obj");
-  // dragonMesh.LoadMaterial("./models/Dragon.mtl");
 
-  // Create instances
-  // Instance* quadInstance = new Instance(quadTransform, &quadMesh,
-  // &simplePhongShader);
-  // Instance* bunnyInstance =
-  //  new Instance(bunnyTransform, &bunnyMesh, &phongNoTextureShader);
-  // Instance* dragonInstance =
-  //  new Instance(dragonTransform, &dragonMesh, &phongNoTextureShader);
+  Instance* dragonInstance = new Instance(
+    dragonTransform, &dragonMesh, &reflectionShader, "Dragon");
 
-  Instance* soulspearInstance =
-    new Instance(soulspearTransform, &soulspearMesh, &normalPhongShader);
+  Instance* soulspearInstance1 = new Instance(
+    soulspearTransform1, &soulspearMesh, &normalPhongShader, "Soulspear (Left)");
+
+  Instance* soulspearInstance2 = new Instance(
+    soulspearTransform2, &soulspearMesh, &normalPhongShader, "Soulspear (Right)");
 
   Instance* mirrorCubeInstance =
-    new Instance(mirrorCubeTransform, &mirrorCube, &reflectionShader);
+    new Instance(mirrorCubeTransform, &mirrorCube, &reflectionShader, "Mirror Cube");
 
   // Add Instances to Scene
-  // activeScene->AddInstance(quadInstance);
-  // activeScene->AddInstance(bunnyInstance);
-  // activeScene->AddInstance(dragonInstance);
-  activeScene->AddInstance(soulspearInstance);
+  activeScene->AddInstance(dragonInstance);
   activeScene->AddInstance(mirrorCubeInstance);
-
+  activeScene->AddInstance(soulspearInstance1);
+  activeScene->AddInstance(soulspearInstance2);
+  
   return true;
 }
 

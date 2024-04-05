@@ -32,13 +32,9 @@ void Scene::Update() {
   pv = camera->GetProjectionMatrix(windowSize.x, windowSize.y) *
        camera->GetViewMatrix();
 
-  /*for (int i = 0; i < instances.size(); i++) {
+  for (int i = 0; i < instances.size(); i++) {
     this->instances[i]->RotateModel(instances[i]->GetAngle(), rotationAxis);
-  }*/
-
-  this->instances[0]->RotateModel(instances[0]->GetAngle(), rotationAxis);
-  this->instances[1]->RotateModel(instances[1]->GetAngle(), rotationAxis);
-
+  }
 }
 
 void Scene::Draw() {
@@ -63,7 +59,7 @@ void Scene::Draw() {
   // UI to Rotate Model
    for (int i = 0; i < instances.size(); i++) {
     ImGui::SliderFloat(
-      ("Rotate Model " + std::to_string(i + 1)).c_str(),
+      ("Rotate " + instances[i]->GetInstanceName()).c_str(),
       &instances[i]->GetAngle(),
       -1.0f,
       1.0f);
