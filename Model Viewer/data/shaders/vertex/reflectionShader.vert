@@ -14,5 +14,5 @@ void main(){
 	vPosition   = ModelMatrix * Position;
 	vNormal     = (ModelMatrix * Normal).xyz;
 
-	gl_Position = ProjectionViewModel * ModelMatrix * Position;
+	gl_Position = ProjectionViewModel * Position;
 }
