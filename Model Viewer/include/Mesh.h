@@ -28,7 +28,7 @@ public:
       Ka{0, 0, 0},
       Kd{0, 0, 0},
       Ks{0, 0, 0},
-      specularPower(32.0f){}
+      specularPower(32.0f) {}
 
   virtual ~Mesh();
 
@@ -75,5 +75,4 @@ protected:
   aie::Texture mapBump; // Normal texture map
 
   float rotationAngle = 0.0f;
-
 };

@@ -45,9 +45,9 @@ public:
   void MakeTransform(
     glm::vec3 position, glm::vec3 eulerAngles, glm::vec3 scale);
 
-  glm::mat4 GetTransform() { return this->transform; }
+  glm::mat4 GetTransform() const { return this->transform; }
 
-  std::string GetInstanceName() { return this->instanceName; }
+  std::string GetInstanceName() const { return this->instanceName; }
 
   glm::mat4 RotateModel(float angle, glm::vec3 rotationAxis) {
     return this->transform = glm::rotate(

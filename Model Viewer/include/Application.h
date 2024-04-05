@@ -23,8 +23,8 @@ public:
   // Singleton Pattern
   static Application* get() { return instance; }
 
-  glm::vec2 GetMousePosition() { return mousePosition; }
-  glm::vec2 GetMouseDelta() { return mousePosition - lastMousePosition; }
+  glm::vec2 GetMousePosition() const { return mousePosition; }
+  glm::vec2 GetMouseDelta() const { return mousePosition - lastMousePosition; }
 
   // Set up mouse input
   static void SetMousePosition(GLFWwindow* window, double x, double y);
